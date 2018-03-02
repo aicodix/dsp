@@ -7,5 +7,6 @@ What we have included so far:
 
 ### [kahan.hh](kahan.hh)
 
-The [Kahan summation algorithm](https://en.wikipedia.org/wiki/Kahan_summation_algorithm)
+When working with [Floating-point arithmetic](https://en.wikipedia.org/wiki/Floating-point_arithmetic) we soon realize, that addition is not necessarily [associative](https://en.wikipedia.org/wiki/Associative_property).
+Whenever we need to add numbers with an ever decreasing magnitude to an sum (of the previous numbers) with an ever increasing magnitude, the [Kahan summation algorithm](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) comes in handy and helps keeping the error growth small.
 
