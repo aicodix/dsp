@@ -54,6 +54,24 @@ public:
 };
 
 template <int TAPS, typename TYPE>
+class Lanczos
+{
+	TYPE w[TAPS];
+	TYPE sinc(TYPE x)
+	{
+		return TYPE(0) == x ? TYPE(1) : std::sin(TYPE(M_PI) * x) / (TYPE(M_PI) * x);
+	}
+public:
+	Lanczos()
+	{
+		for (int n = 0; n < TAPS; ++n)
+			w[n] = sinc(TYPE(2 * n) / TYPE(TAPS - 1) - TYPE(1));
+	}
+	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
+	inline operator const TYPE * () const { return w; }
+};
+
+template <int TAPS, typename TYPE>
 class Gauss
 {
 	TYPE w[TAPS];
