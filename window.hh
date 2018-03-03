@@ -10,6 +10,20 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 namespace DSP {
 
 template <int TAPS, typename TYPE>
+class Rect
+{
+	TYPE w[TAPS];
+public:
+	Rect()
+	{
+		for (int n = 0; n < TAPS; ++n)
+			w[n] = TYPE(1);
+	}
+	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
+	inline operator const TYPE * () const { return w; }
+};
+
+template <int TAPS, typename TYPE>
 class Hann
 {
 	TYPE w[TAPS];
