@@ -80,7 +80,8 @@ class Kaiser
 		// double: 35 iterations
 		for (int n = 1; n < 35; ++n) {
 			TYPE tmp = x / TYPE(2 * n);
-			sum(val *= tmp * tmp);
+			if (sum.same(val *= tmp * tmp))
+				return sum();
 		}
 		return sum();
 	}
