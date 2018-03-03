@@ -16,6 +16,7 @@ class Kahan
 public:
 	Kahan() : high(0), low(0) {}
 	Kahan(T init) : high(init), low(0) {}
+	Kahan(const Kahan &a) : high(a.high), low(a.low) {}
 #if __clang__
 	[[clang::optnone]]
 #elif __GNUC__
@@ -29,6 +30,16 @@ public:
 		T sum = high + tmp;
 		low = (sum - high) - tmp;
 		return high = sum;
+	}
+	bool operator == (const Kahan &a)
+	{
+		return low == a.low && high == a.high;
+	}
+	bool same(T input)
+	{
+		Kahan tmp(*this);
+		(*this)(input);
+		return tmp == *this;
 	}
 	T operator ()() { return high; }
 };
