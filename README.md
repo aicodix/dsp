@@ -12,5 +12,11 @@ Whenever we need to add numbers with an ever decreasing magnitude to an sum (of 
 
 ### [window.hh](window.hh)
 
-Some [Window functions](https://en.wikipedia.org/wiki/Window_function)
+Implemented are the follwing [Window functions](https://en.wikipedia.org/wiki/Window_function):
+* [Rectangular window](https://en.wikipedia.org/wiki/Window_function#Rectangular_window)
+* [Hann window](https://en.wikipedia.org/wiki/Window_function#Hann_window)
+* [Hamming window](https://en.wikipedia.org/wiki/Window_function#Hamming_window)
+* [Lanczos window](https://en.wikipedia.org/wiki/Window_function#Lanczos_window)
+* [Gaussian window](https://en.wikipedia.org/wiki/Window_function#Gaussian_window)
+* [Kaiser window](https://en.wikipedia.org/wiki/Window_function#Kaiser_window)
 
