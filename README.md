@@ -17,6 +17,7 @@ Implemented are the follwing [Window functions](https://en.wikipedia.org/wiki/Wi
 * [Hann window](https://en.wikipedia.org/wiki/Window_function#Hann_window)
 * [Hamming window](https://en.wikipedia.org/wiki/Window_function#Hamming_window)
 * [Lanczos window](https://en.wikipedia.org/wiki/Window_function#Lanczos_window)
+* [Blackman window](https://en.wikipedia.org/wiki/Window_function#Blackman_window)
 * [Gaussian window](https://en.wikipedia.org/wiki/Window_function#Gaussian_window)
 * [Kaiser window](https://en.wikipedia.org/wiki/Window_function#Kaiser_window)
 

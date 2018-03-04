@@ -73,6 +73,23 @@ public:
 };
 
 template <int TAPS, typename TYPE>
+class Blackman
+{
+	TYPE w[TAPS];
+public:
+	Blackman(TYPE a0, TYPE a1, TYPE a2)
+	{
+		for (int n = 0; n < TAPS; ++n)
+			w[n] = a0 - a1 * std::cos(Const<TYPE>::TwoPi() * TYPE(n) / TYPE(TAPS - 1)) + a2 * std::cos(Const<TYPE>::FourPi() * TYPE(n) / TYPE(TAPS - 1));
+	}
+	Blackman(TYPE a) : Blackman((TYPE(1) - a) / TYPE(2), TYPE(0.5), a / TYPE(2)) {}
+	// "exact Blackman"
+	Blackman() : Blackman(TYPE(7938) / TYPE(18608), TYPE(9240) / TYPE(18608), TYPE(1430) / TYPE(18608)) {}
+	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
+	inline operator const TYPE * () const { return w; }
+};
+
+template <int TAPS, typename TYPE>
 class Gauss
 {
 	TYPE w[TAPS];
