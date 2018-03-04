@@ -20,3 +20,7 @@ Implemented are the follwing [Window functions](https://en.wikipedia.org/wiki/Wi
 * [Gaussian window](https://en.wikipedia.org/wiki/Window_function#Gaussian_window)
 * [Kaiser window](https://en.wikipedia.org/wiki/Window_function#Kaiser_window)
 
+### [const.hh](const.hh)
+
+Some constants we need
+
