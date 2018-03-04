@@ -7,6 +7,7 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 #ifndef WINDOW_HH
 #define WINDOW_HH
 
+#include "const.hh"
 #include "kahan.hh"
 
 namespace DSP {
@@ -33,7 +34,7 @@ public:
 	Hann()
 	{
 		for (int n = 0; n < TAPS; ++n)
-			w[n] = TYPE(0.5) * (TYPE(1) - std::cos(TYPE(2) * TYPE(M_PI) * TYPE(n) / TYPE(TAPS - 1)));
+			w[n] = TYPE(0.5) * (TYPE(1) - std::cos(Const<TYPE>::TwoPi() * TYPE(n) / TYPE(TAPS - 1)));
 	}
 	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
 	inline operator const TYPE * () const { return w; }
@@ -47,7 +48,7 @@ public:
 	Hamming()
 	{
 		for (int n = 0; n < TAPS; ++n)
-			w[n] = TYPE(0.54) - TYPE(0.46) * std::cos(TYPE(2) * TYPE(M_PI) * TYPE(n) / TYPE(TAPS - 1));
+			w[n] = TYPE(0.54) - TYPE(0.46) * std::cos(Const<TYPE>::TwoPi() * TYPE(n) / TYPE(TAPS - 1));
 	}
 	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
 	inline operator const TYPE * () const { return w; }
@@ -59,7 +60,7 @@ class Lanczos
 	TYPE w[TAPS];
 	TYPE sinc(TYPE x)
 	{
-		return TYPE(0) == x ? TYPE(1) : std::sin(TYPE(M_PI) * x) / (TYPE(M_PI) * x);
+		return TYPE(0) == x ? TYPE(1) : std::sin(Const<TYPE>::Pi() * x) / (Const<TYPE>::Pi() * x);
 	}
 public:
 	Lanczos()
@@ -101,7 +102,7 @@ class Kaiser
 	{
 		Kahan<TYPE> sum(1.0);
 		TYPE val = 1.0;
-		// converges for -3*M_PI:3*M_PI in less than:
+		// converges for -3*Pi:3*Pi in less than:
 		// float: 25 iterations
 		// double: 35 iterations
 		for (int n = 1; n < 35; ++n) {
@@ -115,7 +116,7 @@ public:
 	Kaiser(TYPE a)
 	{
 		for (int n = 0; n < TAPS; ++n)
-			w[n] = i0(TYPE(M_PI) * a * std::sqrt(TYPE(1) - std::pow(TYPE(2 * n) / TYPE(TAPS - 1) - TYPE(1), TYPE(2)))) / i0(TYPE(M_PI) * a);
+			w[n] = i0(Const<TYPE>::Pi() * a * std::sqrt(TYPE(1) - std::pow(TYPE(2 * n) / TYPE(TAPS - 1) - TYPE(1), TYPE(2)))) / i0(Const<TYPE>::Pi() * a);
 	}
 	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
 	inline operator const TYPE * () const { return w; }
