@@ -13,17 +13,17 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 namespace DSP {
 
 template <typename TYPE>
-struct Window
+struct WinFunc
 {
 	virtual TYPE operator () (int, int) = 0;
 };
 
 template <int TAPS, typename TYPE>
-class Taps
+class Window
 {
 	TYPE w[TAPS];
 public:
-	Taps(Window<TYPE> *func)
+	Window(WinFunc<TYPE> *func)
 	{
 		for (int n = 0; n < TAPS; ++n)
 			w[n] = (*func)(n, TAPS);
@@ -41,13 +41,13 @@ public:
 };
 
 template <typename TYPE>
-struct Rect : public Window<TYPE>
+struct Rect : public WinFunc<TYPE>
 {
 	TYPE operator () (int n, int N) { return n >= 0 && n < N ? 1 : 0; }
 };
 
 template <typename TYPE>
-struct Hann : public Window<TYPE>
+struct Hann : public WinFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
@@ -56,7 +56,7 @@ struct Hann : public Window<TYPE>
 };
 
 template <typename TYPE>
-struct Hamming : public Window<TYPE>
+struct Hamming : public WinFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
@@ -65,7 +65,7 @@ struct Hamming : public Window<TYPE>
 };
 
 template <typename TYPE>
-class Lanczos : public Window<TYPE>
+class Lanczos : public WinFunc<TYPE>
 {
 	static TYPE sinc(TYPE x)
 	{
@@ -79,7 +79,7 @@ public:
 };
 
 template <typename TYPE>
-class Blackman : public Window<TYPE>
+class Blackman : public WinFunc<TYPE>
 {
 	TYPE a0, a1, a2;
 public:
@@ -94,7 +94,7 @@ public:
 };
 
 template <typename TYPE>
-class Gauss : public Window<TYPE>
+class Gauss : public WinFunc<TYPE>
 {
 	TYPE o;
 public:
@@ -106,7 +106,7 @@ public:
 };
 
 template <typename TYPE>
-class Kaiser : public Window<TYPE>
+class Kaiser : public WinFunc<TYPE>
 {
 	TYPE a;
 	/*
