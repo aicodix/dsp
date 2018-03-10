@@ -25,3 +25,11 @@ Implemented are the follwing [Window functions](https://en.wikipedia.org/wiki/Wi
 
 Some constants we need
 
+### [pcm.hh](pcm.hh)
+
+Interface for reading and writing [PCM](https://en.wikipedia.org/wiki/Pulse-code_modulation) data
+
+### [wav.hh](wav.hh)
+
+Read and write [WAV](https://en.wikipedia.org/wiki/WAV) files
+
