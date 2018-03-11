@@ -24,16 +24,17 @@ class WriteWAV : public WritePCM<TYPE>
 			os.put(255 & (v >> (8 * i)));
 	}
 public:
-	WriteWAV(const char *name, int rate, int bytes, int channels) : os(name, std::ios::binary | std::ios::trunc), bytes(bytes), channels(channels)
+	WriteWAV(const char *name, int rate, int bits, int channels) : os(name, std::ios::binary | std::ios::trunc), bytes(bits / 8), channels(channels)
 	{
-		switch (bytes) {
-			case 1:
+		switch (bits) {
+			case 8:
 				offset = 128;
 				factor = 127;
 				min = 0;
 				max = 255;
 				break;
 			default:
+				bits = 16;
 				bytes = 2;
 				offset = 0;
 				factor = 32767;
