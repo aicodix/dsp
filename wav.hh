@@ -25,6 +25,8 @@ class ReadWAV : public ReadPCM<TYPE>
 			v |= is.get() << (8 * i);
 		if (b == 2 && v > 32767)
 			v |= ~32767;
+		if (b == 3 && v > 8388607)
+			v |= ~8388607;
 		return v;
 	}
 	bool cmp4(const char *a, const char *b)
@@ -61,7 +63,7 @@ public:
 		int ByteRate = readLE(4);
 		int BlockAlign = readLE(2);
 		bits = readLE(2);
-		if (bits != 8 && bits != 16)
+		if (bits != 8 && bits != 16 && bits != 24 && bits != 32)
 			return;
 		bytes = bits / 8;
 		if (bytes * channels != BlockAlign)
@@ -84,6 +86,14 @@ public:
 			case 16:
 				offset = 0;
 				factor = 32767;
+				break;
+			case 24:
+				offset = 0;
+				factor = 8388607;
+				break;
+			case 32:
+				offset = 0;
+				factor = 2147483647;
 				break;
 			default:
 				return;
@@ -119,6 +129,24 @@ public:
 				factor = 127;
 				min = 0;
 				max = 255;
+				break;
+			case 16:
+				offset = 0;
+				factor = 32767;
+				min = -32768;
+				max = 32767;
+				break;
+			case 24:
+				offset = 0;
+				factor = 8388607;
+				min = -8388608;
+				max = 8388607;
+				break;
+			case 32:
+				offset = 0;
+				factor = 2147483647;
+				min = -2147483648;
+				max = 2147483647;
 				break;
 			default:
 				bits = 16;
