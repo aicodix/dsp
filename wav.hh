@@ -13,6 +13,93 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 namespace DSP {
 
 template <typename TYPE>
+class ReadWAV : public ReadPCM<TYPE>
+{
+	std::ifstream is;
+	int bits, bytes, rate, channels;
+	int offset, factor;
+	int readLE(int b)
+	{
+		int v = 0;
+		for (int i = 0; i < b; ++i)
+			v |= is.get() << (8 * i);
+		if (b == 2 && v > 32767)
+			v |= ~32767;
+		return v;
+	}
+	bool cmp4(const char *a, const char *b)
+	{
+		for (int i = 0; i < 4; ++i)
+			if (a[i] != b[i])
+				return true;
+		return false;
+	}
+public:
+	ReadWAV(const char *name) : is(name, std::ios::binary)
+	{
+		char ChunkID[4];
+		is.read(ChunkID, 4);
+		if (cmp4("RIFF", ChunkID))
+			return;
+		int ChunkSize = readLE(4);
+		char Format[4];
+		is.read(Format, 4);
+		if (cmp4("WAVE", Format))
+			return;
+		char Subchunk1ID[4];
+		is.read(Subchunk1ID, 4);
+		if (cmp4("fmt ", Subchunk1ID))
+			return;
+		int Subchunk1Size = readLE(4);
+		if (Subchunk1Size != 16)
+			return;
+		int AudioFormat = readLE(2);
+		if (AudioFormat != 1)
+			return;
+		channels = readLE(2);
+		rate = readLE(4);
+		int ByteRate = readLE(4);
+		int BlockAlign = readLE(2);
+		bits = readLE(2);
+		if (bits != 8 && bits != 16)
+			return;
+		bytes = bits / 8;
+		if (bytes * channels != BlockAlign)
+			return;
+		if (rate * bytes * channels != ByteRate)
+			return;
+		char Subchunk2ID[4];
+		is.read(Subchunk2ID, 4);
+		if (cmp4("data", Subchunk2ID))
+			return;
+		int Subchunk2Size = readLE(4);
+		if (36 + Subchunk2Size != ChunkSize)
+			return;
+
+		switch (bits) {
+			case 8:
+				offset = 128;
+				factor = 127;
+				break;
+			case 16:
+				offset = 0;
+				factor = 32767;
+				break;
+			default:
+				return;
+		}
+	}
+	void read(TYPE *buf, int num, int stride = 1)
+	{
+		for (int n = 0; n < num; ++n) {
+			for (int c = 0; c < channels; ++c) {
+				buf[stride * n + c] = TYPE(readLE(bytes) - offset) / TYPE(factor);
+			}
+		}
+	}
+};
+
+template <typename TYPE>
 class WriteWAV : public WritePCM<TYPE>
 {
 	std::ofstream os;
