@@ -107,6 +107,10 @@ public:
 			}
 		}
 	}
+	void skip(int num)
+	{
+		is.seekg(num * channels * bytes, std::ios_base::cur);
+	}
 };
 
 template <typename TYPE>

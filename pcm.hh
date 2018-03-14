@@ -20,6 +20,7 @@ template <typename TYPE>
 struct ReadPCM
 {
 	virtual void read(TYPE *, int, int) = 0;
+	virtual void skip(int) = 0;
 };
 
 }
