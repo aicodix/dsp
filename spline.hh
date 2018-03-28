@@ -13,8 +13,9 @@ template <int KNOTS, typename OTYPE, typename ITYPE>
 class UniformNaturalCubicSpline
 {
 	OTYPE A[KNOTS], B[KNOTS], C[KNOTS], D[KNOTS];
+	ITYPE x0, dx;
 public:
-	UniformNaturalCubicSpline(OTYPE *y, int STRIDE = 1)
+	UniformNaturalCubicSpline(OTYPE *y, ITYPE x0 = 0, ITYPE dx = 1, int STRIDE = 1) : x0(x0), dx(dx)
 	{
 		for (int i = 0; i < KNOTS; ++i)
 			A[i] = y[i * STRIDE];
@@ -37,14 +38,15 @@ public:
 	}
 	OTYPE operator () (ITYPE x)
 	{
-		int k = x;
-		ITYPE t = x - ITYPE(k);
+		ITYPE tx = (x - x0) / dx;
+		int k = tx;
+		ITYPE t = tx - ITYPE(k);
 		if (k < 0) {
-			t = x;
+			t = tx;
 			k = 0;
 		}
 		if (k >= KNOTS - 1) {
-			t = x - ITYPE(KNOTS-2);
+			t = tx - ITYPE(KNOTS-2);
 			k = KNOTS-2;
 		}
 		return A[k] + t * (B[k] + t * (C[k] + t * D[k]));
