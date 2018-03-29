@@ -18,15 +18,15 @@ public:
 	UniformNaturalCubicSpline(OTYPE *y, ITYPE x0 = 0, ITYPE dx = 1, int STRIDE = 1) : x0(x0), dx(dx)
 	{
 		ITYPE u[KNOTS-1];
-		u[0] = 0;
+		u[0] = ITYPE(0);
 		OTYPE z[KNOTS-1];
-		z[0] = 0;
+		z[0] = ITYPE(0);
 		for (int i = 1; i < KNOTS - 1; ++i) {
 			ITYPE l = ITYPE(4) - u[i-1];
 			u[i] = ITYPE(1) / l;
 			z[i] = (ITYPE(3) * (y[(i+1)*STRIDE] - ITYPE(2) * y[i*STRIDE] + y[(i-1)*STRIDE]) - z[i-1]) / l;
 		}
-		OTYPE c = 0;
+		OTYPE c(ITYPE(0));
 		for (int i = KNOTS - 2; i >= 0; --i) {
 			A[i] = y[i * STRIDE];
 			C[i] = z[i] - u[i] * c;
