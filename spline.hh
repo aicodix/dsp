@@ -12,28 +12,27 @@ namespace DSP {
 template <int KNOTS, typename OTYPE, typename ITYPE>
 class UniformNaturalCubicSpline
 {
-	OTYPE A[KNOTS], B[KNOTS], C[KNOTS], D[KNOTS];
+	OTYPE A[KNOTS-1], B[KNOTS-1], C[KNOTS-1], D[KNOTS-1];
 	ITYPE x0, dx;
 public:
 	UniformNaturalCubicSpline(OTYPE *y, ITYPE x0 = 0, ITYPE dx = 1, int STRIDE = 1) : x0(x0), dx(dx)
 	{
-		for (int i = 0; i < KNOTS; ++i)
-			A[i] = y[i * STRIDE];
-		ITYPE u[KNOTS], l[KNOTS];
+		ITYPE u[KNOTS-1];
 		u[0] = 0;
-		l[0] = l[KNOTS-1] = 1;
-		OTYPE z[KNOTS];
-		z[0] = z[KNOTS-1] = 0;
+		OTYPE z[KNOTS-1];
+		z[0] = 0;
 		for (int i = 1; i < KNOTS - 1; ++i) {
-			l[i] = ITYPE(4) - u[i-1];
-			u[i] = ITYPE(1) / l[i];
-			z[i] = (ITYPE(3) * (A[i+1] - ITYPE(2) * A[i] + A[i-1]) - z[i-1]) / l[i];
+			ITYPE l = ITYPE(4) - u[i-1];
+			u[i] = ITYPE(1) / l;
+			z[i] = (ITYPE(3) * (y[(i+1)*STRIDE] - ITYPE(2) * y[i*STRIDE] + y[(i-1)*STRIDE]) - z[i-1]) / l;
 		}
-		C[KNOTS-1] = 0;
+		OTYPE c = 0;
 		for (int i = KNOTS - 2; i >= 0; --i) {
-			C[i] = z[i] - u[i] * C[i+1];
-			B[i] = A[i+1] - A[i] - (C[i+1] + ITYPE(2) * C[i]) / ITYPE(3);
-			D[i] = (C[i+1] - C[i]) / ITYPE(3);
+			A[i] = y[i * STRIDE];
+			C[i] = z[i] - u[i] * c;
+			B[i] = y[(i+1)*STRIDE] - y[i*STRIDE] - (c + ITYPE(2) * C[i]) / ITYPE(3);
+			D[i] = (c - C[i]) / ITYPE(3);
+			c = C[i];
 		}
 	}
 	OTYPE operator () (ITYPE x)
