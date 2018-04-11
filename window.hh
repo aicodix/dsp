@@ -28,13 +28,13 @@ public:
 		for (int n = 0; n < TAPS; ++n)
 			w[n] = (*func)(n, TAPS);
 	}
-	void normalize()
+	void normalize(TYPE divisor = 1)
 	{
 		TYPE sum(0);
 		for (int n = 0; n < TAPS; ++n)
 			sum += w[n];
 		for (int n = 0; n < TAPS; ++n)
-			w[n] /= std::abs(sum);
+			w[n] /= divisor * std::abs(sum);
 	}
 	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
 	inline operator const TYPE * () const { return w; }
