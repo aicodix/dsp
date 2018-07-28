@@ -38,3 +38,19 @@ Read and write [WAV](https://en.wikipedia.org/wiki/WAV) files
 Algorithm for computing uniform and [natural cubic splines](https://en.wikipedia.org/wiki/Spline_(mathematics)#Algorithm_for_computing_natural_cubic_splines)
 Very useful for data interpolation.
 
+### [crc.hh](crc.hh)
+
+A [Cyclic redundancy check](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) may not really be DSP-related, but it is needed over and over again when you do DSP that it fits just perfectly here.
+
+For example, if we need to integrate CRC32 checking for a few bytes, like in the following:
+```
+# echo -n 'Hello World!' | rhash -C -
+(stdin) 1C291CA3
+```
+We can add it to our project as simple as that:
+```
+DSP::CRC<uint32_t> crc(0xEDB88320, 0xFFFFFFFF);
+for (uint8_t c: std::string("Hello World!")) crc(c);
+assert(!crc(uint32_t(~0x1C291CA3)));
+```
+
