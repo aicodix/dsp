@@ -33,6 +33,10 @@ public:
 	{
 		crc = v;
 	}
+	TYPE operator()()
+	{
+		return crc;
+	}
 	TYPE operator()(bool data)
 	{
 		TYPE tmp = crc ^ data;
