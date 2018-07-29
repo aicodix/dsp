@@ -15,13 +15,18 @@ class CRC
 	TYPE lut[256];
 	TYPE poly;
 	TYPE crc;
+	TYPE update(TYPE prev, bool data)
+	{
+		TYPE tmp = prev ^ data;
+		return (prev >> 1) ^ ((tmp & 1) * poly);
+	}
 public:
 	CRC(TYPE poly, TYPE crc = 0) : poly(poly), crc(crc)
 	{
 		for (int j = 0; j < 256; ++j) {
 			TYPE tmp = j;
 			for (int i = 8; i; --i)
-				tmp = (tmp >> 1) ^ ((tmp & 1) * poly);
+				tmp = update(tmp, 0);
 			lut[j] = tmp;
 		}
 	}
@@ -35,8 +40,7 @@ public:
 	}
 	TYPE operator()(bool data)
 	{
-		TYPE tmp = crc ^ data;
-		return crc = (crc >> 1) ^ ((tmp & 1) * poly);
+		return crc = update(crc, data);
 	}
 	TYPE operator()(uint8_t data)
 	{
