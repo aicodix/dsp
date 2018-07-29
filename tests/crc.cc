@@ -24,7 +24,7 @@ int main()
 		std::bitset<32> hw("00000010001001110111110100100100");
 		for (size_t i = 0; i < hw.size(); ++i) crc(hw[i]);
 		//std::cerr << "0x" << std::hex << crc() << std::endl;
-		assert(!crc(uint16_t(0x915D)));
+		assert(crc() == 0x915D);
 	}
 	if (1) {
 		DSP::CRC<uint8_t> crc(0x8C);
