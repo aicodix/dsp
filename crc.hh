@@ -29,7 +29,7 @@ public:
 			}
 		}
 	}
-	void reset(TYPE v)
+	void reset(TYPE v = 0)
 	{
 		crc = v;
 	}
