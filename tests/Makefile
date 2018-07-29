@@ -5,9 +5,10 @@ CXX = clang++ -stdlib=libc++
 
 .PHONY: clean test
 
-test: kahan
+test: kahan crc
 	./kahan
+	./crc
 
 clean:
-	rm -f kahan
+	rm -f kahan crc
 
