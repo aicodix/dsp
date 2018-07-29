@@ -51,13 +51,30 @@ public:
 			crc ^= lut[(k << 8) + ((tmp >>= 8) & 255)];
 		return crc;
 	}
-	template <typename DATA>
-	TYPE operator()(DATA data)
+	TYPE operator()(uint16_t data)
 	{
-		for (int i = sizeof(data); i; --i) {
-			(*this)((uint8_t)data);
-			data >>= 8;
-		}
+		(*this)(uint8_t(data & 255));
+		(*this)(uint8_t((data >> 8) & 255));
+		return crc;
+	}
+	TYPE operator()(uint32_t data)
+	{
+		(*this)(uint8_t(data & 255));
+		(*this)(uint8_t((data >> 8) & 255));
+		(*this)(uint8_t((data >> 16) & 255));
+		(*this)(uint8_t((data >> 24) & 255));
+		return crc;
+	}
+	TYPE operator()(uint64_t data)
+	{
+		(*this)(uint8_t(data & 255));
+		(*this)(uint8_t((data >> 8) & 255));
+		(*this)(uint8_t((data >> 16) & 255));
+		(*this)(uint8_t((data >> 24) & 255));
+		(*this)(uint8_t((data >> 32) & 255));
+		(*this)(uint8_t((data >> 40) & 255));
+		(*this)(uint8_t((data >> 48) & 255));
+		(*this)(uint8_t((data >> 56) & 255));
 		return crc;
 	}
 };
