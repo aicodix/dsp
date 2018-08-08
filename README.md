@@ -54,3 +54,7 @@ for (uint8_t c: std::string("Hello World!")) crc(c);
 assert(!crc(uint32_t(~0x1C291CA3)));
 ```
 
+### [regression.hh](regression.hh)
+
+Implemented [Simple linear regression](https://en.wikipedia.org/wiki/Simple_linear_regression) for [Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) of data.
+
