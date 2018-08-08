@@ -16,7 +16,7 @@ template <typename TYPE>
 class ReadWAV : public ReadPCM<TYPE>
 {
 	std::ifstream is;
-	int bits, bytes, rate, channels;
+	int bits, bytes, rate_, channels_, frames_;
 	int offset, factor;
 	int readLE(int b)
 	{
@@ -58,17 +58,17 @@ public:
 		int AudioFormat = readLE(2);
 		if (AudioFormat != 1)
 			return;
-		channels = readLE(2);
-		rate = readLE(4);
+		channels_ = readLE(2);
+		rate_ = readLE(4);
 		int ByteRate = readLE(4);
 		int BlockAlign = readLE(2);
 		bits = readLE(2);
 		if (bits != 8 && bits != 16 && bits != 24 && bits != 32)
 			return;
 		bytes = bits / 8;
-		if (bytes * channels != BlockAlign)
+		if (bytes * channels_ != BlockAlign)
 			return;
-		if (rate * bytes * channels != ByteRate)
+		if (rate_ * bytes * channels_ != ByteRate)
 			return;
 		char Subchunk2ID[4];
 		is.read(Subchunk2ID, 4);
@@ -77,6 +77,7 @@ public:
 		int Subchunk2Size = readLE(4);
 		if (36 + Subchunk2Size != ChunkSize)
 			return;
+		frames_ = Subchunk2Size / (bytes * channels_);
 
 		switch (bits) {
 			case 8:
@@ -102,14 +103,26 @@ public:
 	void read(TYPE *buf, int num, int stride = 1)
 	{
 		for (int n = 0; n < num; ++n) {
-			for (int c = 0; c < channels; ++c) {
+			for (int c = 0; c < channels_; ++c) {
 				buf[stride * n + c] = TYPE(readLE(bytes) - offset) / TYPE(factor);
 			}
 		}
 	}
 	void skip(int num)
 	{
-		is.seekg(num * channels * bytes, std::ios_base::cur);
+		is.seekg(num * channels_ * bytes, std::ios_base::cur);
+	}
+	int frames()
+	{
+		return frames_;
+	}
+	int channels()
+	{
+		return channels_;
+	}
+	int rate()
+	{
+		return rate_;
 	}
 };
 

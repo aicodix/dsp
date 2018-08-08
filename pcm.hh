@@ -21,6 +21,9 @@ struct ReadPCM
 {
 	virtual void read(TYPE *, int, int) = 0;
 	virtual void skip(int) = 0;
+	virtual int rate() = 0;
+	virtual int channels() = 0;
+	virtual int frames() { return -1; }
 };
 
 }
