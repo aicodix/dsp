@@ -14,6 +14,7 @@ class SimpleLinearRegression
 {
 	TYPE xint_, yint_, slope_;
 public:
+	SimpleLinearRegression() : xint_(0), yint_(0), slope_(0) {}
 	SimpleLinearRegression(TYPE *x, TYPE *y, int LEN)
 	{
 		TYPE avgX(0), avgY(0);
