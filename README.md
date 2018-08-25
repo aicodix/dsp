@@ -58,3 +58,7 @@ assert(!crc(uint32_t(~0x1C291CA3)));
 
 Implemented [Simple linear regression](https://en.wikipedia.org/wiki/Simple_linear_regression) for [Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) of data.
 
+### [complex.hh](complex.hh)
+
+Faster alternative (no Inf/NaN handling) to the std::complex implementation.
+
