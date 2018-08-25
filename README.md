@@ -62,3 +62,7 @@ Implemented [Simple linear regression](https://en.wikipedia.org/wiki/Simple_line
 
 Faster alternative (no Inf/NaN handling) to the std::complex implementation.
 
+### [fft.hh](fft.hh)
+
+Mixed-radix [decimation-in-time](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm) [fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
+
