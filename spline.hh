@@ -15,6 +15,7 @@ class UniformNaturalCubicSpline
 	OTYPE A[KNOTS-1], B[KNOTS-1], C[KNOTS-1], D[KNOTS-1];
 	ITYPE x0, dx;
 public:
+	UniformNaturalCubicSpline() = default;
 	UniformNaturalCubicSpline(OTYPE *y, ITYPE x0 = 0, ITYPE dx = 1, int STRIDE = 1) : x0(x0), dx(dx)
 	{
 		ITYPE u[KNOTS-1];
