@@ -22,8 +22,8 @@ public:
 	inline void imag(T i) { im = i; }
 	inline Complex<T> operator = (T a)
 	{
-		real() = a;
-		imag() = 0;
+		re = a;
+		im = 0;
 		return *this;
 	}
 	inline Complex<T> operator += (Complex<T> a)
