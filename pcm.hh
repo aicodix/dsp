@@ -13,6 +13,7 @@ template <typename TYPE>
 struct WritePCM
 {
 	virtual void write(TYPE *, int, int = 1) = 0;
+	virtual bool good() = 0;
 	virtual void silence(int) = 0;
 };
 
@@ -20,6 +21,7 @@ template <typename TYPE>
 struct ReadPCM
 {
 	virtual void read(TYPE *, int, int = 1) = 0;
+	virtual bool good() = 0;
 	virtual void skip(int) = 0;
 	virtual int rate() = 0;
 	virtual int channels() = 0;

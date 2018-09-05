@@ -108,6 +108,10 @@ public:
 			}
 		}
 	}
+	bool good()
+	{
+		return is.good();
+	}
 	void skip(int num)
 	{
 		is.seekg(num * channels_ * bytes, std::ios_base::cur);
@@ -203,6 +207,10 @@ public:
 				writeLE(std::nearbyint(std::clamp(v, TYPE(min), TYPE(max))), bytes);
 			}
 		}
+	}
+	bool good()
+	{
+		return os.good();
 	}
 	void silence(int num)
 	{
