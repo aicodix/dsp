@@ -66,3 +66,7 @@ Faster alternative (no Inf/NaN handling) to the std::complex implementation.
 
 Mixed-radix [decimation-in-time](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm) [fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
 
+### [utils.hh](utils.hh)
+
+Some everyday helpers, like the [signum function](https://en.wikipedia.org/wiki/Sign_function).
+
