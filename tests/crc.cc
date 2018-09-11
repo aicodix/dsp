@@ -14,7 +14,7 @@ int main()
 	if (1) {
 		DSP::CRC<uint32_t> crc(0xEDB88320, 0xFFFFFFFF);
 		for (uint8_t c: std::string("Hello World!")) crc(c);
-		assert(!crc(uint32_t(~0x1C291CA3)));
+		assert(~crc() == 0x1C291CA3);
 	}
 	if (1) {
 		DSP::CRC<uint16_t> crc(0xA8F4);

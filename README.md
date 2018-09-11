@@ -51,7 +51,7 @@ We can add it to our project as simple as that:
 ```
 DSP::CRC<uint32_t> crc(0xEDB88320, 0xFFFFFFFF);
 for (uint8_t c: std::string("Hello World!")) crc(c);
-assert(!crc(uint32_t(~0x1C291CA3)));
+assert(~crc() == 0x1C291CA3);
 ```
 
 ### [regression.hh](regression.hh)
