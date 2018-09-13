@@ -70,3 +70,9 @@ Mixed-radix [decimation-in-time](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tu
 
 Some everyday helpers, like the [signum function](https://en.wikipedia.org/wiki/Sign_function) or the [lerp function](https://en.wikipedia.org/wiki/Linear_interpolation).
 
+### [xorshift.hh](xorshift.hh)
+
+Sometimes we need a sequence of ["random enough"](https://en.wikipedia.org/wiki/Diehard_tests) numbers but don't want to store them in an array to get a repeatable sequence.
+Here a [Pseudorandom number generator](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) can help by prodiving a deterministic and thus repeatable sequence of numbers.
+[George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia) discovered a class of simple and fast pseudorandom number generators, which he called [Xorshift](https://en.wikipedia.org/wiki/Xorshift).
+
