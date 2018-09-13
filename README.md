@@ -76,3 +76,8 @@ Sometimes we need a sequence of ["random enough"](https://en.wikipedia.org/wiki/
 Here a [Pseudorandom number generator](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) can help by prodiving a deterministic and thus repeatable sequence of numbers.
 [George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia) discovered a class of simple and fast pseudorandom number generators, which he called [Xorshift](https://en.wikipedia.org/wiki/Xorshift).
 
+### [resampler.hh](resampler.hh)
+
+When working with [Analog-to-digital](https://en.wikipedia.org/wiki/Analog-to-digital_converter) and [Digital-to-analog](https://en.wikipedia.org/wiki/Digital-to-analog_converter) converters, we often face the ugly truth, that we can't always have a precise [Sampling](https://en.wikipedia.org/wiki/Sampling_(signal_processing)) rate.
+But if we can estimate the Sampling frequency offset, we can correct it by [Resampling](https://en.wikipedia.org/wiki/Sample-rate_conversion) the sampled data.
+
