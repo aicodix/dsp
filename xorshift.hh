@@ -11,63 +11,102 @@ namespace DSP {
 
 class Xorshift32
 {
-	uint32_t y;
+	static const uint32_t Y = 2463534242;
+	uint32_t y_;
 public:
-	Xorshift32(uint32_t y = 2463534242) : y(y) {}
+	Xorshift32(uint32_t y = Y) : y_(y) {}
+	void reset(uint32_t y = Y)
+	{
+		y_ = y;
+	}
 	uint32_t operator()()
 	{
-		y ^= y << 13;
-		y ^= y >> 17;
-		y ^= y << 5;
-		return y;
+		y_ ^= y_ << 13;
+		y_ ^= y_ >> 17;
+		y_ ^= y_ << 5;
+		return y_;
 	}
 };
 
 class Xorshift64
 {
-	uint64_t x;
+	static const uint64_t X = 88172645463325252;
+	uint64_t x_;
 public:
-	Xorshift64(uint64_t x = 88172645463325252) : x(x) {}
+	Xorshift64(uint64_t x = X) : x_(x) {}
+	void reset(uint64_t x = X)
+	{
+		x_ = x;
+	}
 	uint64_t operator()()
 	{
-		x ^= x << 13;
-		x ^= x >> 7;
-		x ^= x << 17;
-		return x;
+		x_ ^= x_ << 13;
+		x_ ^= x_ >> 7;
+		x_ ^= x_ << 17;
+		return x_;
 	}
 };
 
 class Xorwow
 {
-	uint32_t x, y, z, w, v, d;
+	static const uint32_t X = 123456789;
+	static const uint32_t Y = 362436069;
+	static const uint32_t Z = 521288629;
+	static const uint32_t W = 88675123;
+	static const uint32_t V = 5783321;
+	static const uint32_t D = 6615241;
+	uint32_t x_, y_, z_, w_, v_, d_;
 public:
-	Xorwow(uint32_t x = 123456789, uint32_t y = 362436069,
-		uint32_t z = 521288629, uint32_t w = 88675123,
-		uint32_t v = 5783321, uint32_t d = 6615241) :
-		x(x), y(y), z(z), w(w), v(v), d(d) {}
+	Xorwow(uint32_t x = X, uint32_t y = Y,
+		uint32_t z = Z, uint32_t w = W,
+		uint32_t v = V, uint32_t d = D) :
+		x_(x), y_(y), z_(z), w_(w), v_(v), d_(d) {}
+	void reset(uint32_t x = X, uint32_t y = Y,
+		uint32_t z = Z, uint32_t w = W,
+		uint32_t v = V, uint32_t d = D)
+	{
+		x_ = x;
+		y_ = y;
+		z_ = z;
+		w_ = w;
+		v_ = v;
+		d_ = d;
+	}
 	uint32_t operator()()
 	{
-		uint32_t t = x ^ (x >> 2);
-		x = y; y = z; z = w; w = v;
-		v = (v ^ (v << 4)) ^ (t ^ (t << 1));
-		d += 362437;
-		return d + v;
+		uint32_t t = x_ ^ (x_ >> 2);
+		x_ = y_; y_ = z_; z_ = w_; w_ = v_;
+		v_ = (v_ ^ (v_ << 4)) ^ (t ^ (t << 1));
+		d_ += 362437;
+		return d_ + v_;
 	}
 };
 
 class Xorshift128
 {
-	uint32_t x, y, z, w;
+	static const uint32_t X = 123456789;
+	static const uint32_t Y = 362436069;
+	static const uint32_t Z = 521288629;
+	static const uint32_t W = 88675123;
+	uint32_t x_, y_, z_, w_;
 public:
-	Xorshift128(uint32_t x = 123456789, uint32_t y = 362436069,
-		uint32_t z = 521288629, uint32_t w = 88675123) :
-		x(x), y(y), z(z), w(w) {}
+	Xorshift128(uint32_t x = X, uint32_t y = Y,
+		uint32_t z = Z, uint32_t w = W) :
+		x_(x), y_(y), z_(z), w_(w) {}
+	void reset(uint32_t x = X, uint32_t y = Y,
+		uint32_t z = Z, uint32_t w = W)
+	{
+		x_ = x;
+		y_ = y;
+		z_ = z;
+		w_ = w;
+	}
 	uint32_t operator()()
 	{
-		uint32_t t = (x ^ (x << 11));
-		x = y; y = z; z = w;
-		w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));
-		return w;
+		uint32_t t = (x_ ^ (x_ << 11));
+		x_ = y_; y_ = z_; z_ = w_;
+		w_ = (w_ ^ (w_ >> 19)) ^ (t ^ (t >> 8));
+		return w_;
 	}
 };
 
