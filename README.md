@@ -38,22 +38,6 @@ Read and write [WAV](https://en.wikipedia.org/wiki/WAV) files
 Algorithm for computing uniform and [natural cubic splines](https://en.wikipedia.org/wiki/Spline_(mathematics)#Algorithm_for_computing_natural_cubic_splines)
 Very useful for data interpolation.
 
-### [crc.hh](crc.hh)
-
-A [Cyclic redundancy check](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) may not really be DSP-related, but it is needed over and over again when you do DSP that it fits just perfectly here.
-
-For example, if we need to integrate CRC32 checking for a few bytes, like in the following:
-```
-# echo -n 'Hello World!' | rhash -C -
-(stdin) 1C291CA3
-```
-We can add it to our project as simple as that:
-```
-DSP::CRC<uint32_t> crc(0xEDB88320, 0xFFFFFFFF);
-for (uint8_t c: std::string("Hello World!")) crc(c);
-assert(~crc() == 0x1C291CA3);
-```
-
 ### [regression.hh](regression.hh)
 
 Implemented [Simple linear regression](https://en.wikipedia.org/wiki/Simple_linear_regression) for [Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) of data.
@@ -69,12 +53,6 @@ Mixed-radix [decimation-in-time](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tu
 ### [utils.hh](utils.hh)
 
 Some everyday helpers, like the [signum function](https://en.wikipedia.org/wiki/Sign_function) or the [lerp function](https://en.wikipedia.org/wiki/Linear_interpolation).
-
-### [xorshift.hh](xorshift.hh)
-
-Sometimes we need a sequence of ["random enough"](https://en.wikipedia.org/wiki/Diehard_tests) numbers but don't want to store them in an array to get a repeatable sequence.
-Here a [Pseudorandom number generator](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) can help by prodiving a deterministic and thus repeatable sequence of numbers.
-[George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia) discovered a class of simple and fast pseudorandom number generators, which he called [Xorshift](https://en.wikipedia.org/wiki/Xorshift).
 
 ### [resampler.hh](resampler.hh)
 
