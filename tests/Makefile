@@ -1,14 +1,15 @@
 
-CXXFLAGS = -I.. -std=c++11 -W -Wall -O3 -march=native -ffast-math
+CXXFLAGS = -I.. -std=c++17 -W -Wall -Ofast -fno-exceptions -fno-rtti -march=native
 CXX = clang++ -stdlib=libc++
 #CXX = g++
 
 .PHONY: clean test
 
-test: kahan crc
-	./kahan
-	./crc
+tests := $(basename $(wildcard *_test.*))
+
+test: $(tests)
+	$(patsubst %,./%;,$(tests))
 
 clean:
-	rm -f kahan crc
+	rm -f *_test
 
