@@ -52,7 +52,10 @@ Mixed-radix [decimation-in-time](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tu
 
 ### [utils.hh](utils.hh)
 
-Some everyday helpers, like the [signum function](https://en.wikipedia.org/wiki/Sign_function) or the [lerp function](https://en.wikipedia.org/wiki/Linear_interpolation).
+Some everyday helpers:
+* [signum function](https://en.wikipedia.org/wiki/Sign_function)
+* [lerp function](https://en.wikipedia.org/wiki/Linear_interpolation)
+* [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) of the [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution)
 
 ### [resampler.hh](resampler.hh)
 
