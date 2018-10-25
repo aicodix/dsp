@@ -206,7 +206,7 @@ public:
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
 				TYPE v = TYPE(offset) + TYPE(factor) * buf[stride * n + c];
-				writeLE(std::nearbyint(std::clamp(v, TYPE(min), TYPE(max))), bytes);
+				writeLE(std::nearbyint(std::min(std::max(v, TYPE(min)), TYPE(max))), bytes);
 			}
 		}
 	}
