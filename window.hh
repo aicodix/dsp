@@ -16,6 +16,7 @@ template <typename TYPE>
 struct WinFunc
 {
 	virtual TYPE operator () (int, int) = 0;
+	virtual ~WinFunc() = default;
 };
 
 template <int TAPS, typename TYPE>

@@ -17,6 +17,7 @@ struct WritePCM
 	virtual void silence(int) = 0;
 	virtual int rate() = 0;
 	virtual int channels() = 0;
+	virtual ~WritePCM() = default;
 };
 
 template <typename TYPE>
@@ -28,6 +29,7 @@ struct ReadPCM
 	virtual int rate() = 0;
 	virtual int channels() = 0;
 	virtual int frames() { return -1; }
+	virtual ~ReadPCM() = default;
 };
 
 }
