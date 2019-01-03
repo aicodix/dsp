@@ -35,6 +35,18 @@ TYPE sinc(TYPE x)
 	return TYPE(0) == x ? TYPE(1) : std::sin(Const<TYPE>::Pi() * x) / (Const<TYPE>::Pi() * x);
 }
 
+template <typename TYPE>
+TYPE delta(TYPE x)
+{
+	return TYPE(0) == x ? TYPE(1) : TYPE(0);
+}
+
+template <typename TYPE>
+TYPE decibel(TYPE v)
+{
+	return TYPE(10) * std::log10(v);
+}
+
 }
 
 #endif
