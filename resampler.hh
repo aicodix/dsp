@@ -10,6 +10,7 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #include "window.hh"
 #include "spline.hh"
+#include "utils.hh"
 #include "const.hh"
 
 namespace DSP {
@@ -19,11 +20,6 @@ class Resampler
 {
 	typedef DSP::UniformNaturalCubicSpline<TAPS * OVER, TYPE, TYPE> spline_type;
 	spline_type lpf;
-
-	static TYPE sinc(TYPE x)
-	{
-		return TYPE(0) == x ? TYPE(1) : std::sin(DSP::Const<TYPE>::Pi() * x) / (DSP::Const<TYPE>::Pi() * x);
-	}
 public:
 	Resampler(TYPE cutoff, TYPE alpha)
 	{

@@ -56,6 +56,7 @@ Some everyday helpers:
 * [signum function](https://en.wikipedia.org/wiki/Sign_function)
 * [lerp function](https://en.wikipedia.org/wiki/Linear_interpolation)
 * [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) of the [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution)
+* [sinc function](https://en.wikipedia.org/wiki/Sinc_function)
 
 ### [resampler.hh](resampler.hh)
 

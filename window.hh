@@ -9,6 +9,7 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #include "const.hh"
 #include "kahan.hh"
+#include "utils.hh"
 #include "coeffs.hh"
 
 namespace DSP {
@@ -40,11 +41,6 @@ struct Hamming : public CoeffsFunc<TYPE>
 template <typename TYPE>
 class Lanczos : public CoeffsFunc<TYPE>
 {
-	static TYPE sinc(TYPE x)
-	{
-		return TYPE(0) == x ? TYPE(1) : std::sin(Const<TYPE>::Pi() * x) / (Const<TYPE>::Pi() * x);
-	}
-public:
 	TYPE operator () (int n, int N)
 	{
 		return sinc(TYPE(2 * n) / TYPE(N - 1) - TYPE(1));

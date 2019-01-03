@@ -29,6 +29,12 @@ TYPE normal_pdf(TYPE x, TYPE m, TYPE s)
 	return std::exp(-std::pow((x - m) / s, TYPE(2)) / TYPE(2)) / (Const<TYPE>::SqrtTwoPi() * s);
 }
 
+template <typename TYPE>
+TYPE sinc(TYPE x)
+{
+	return TYPE(0) == x ? TYPE(1) : std::sin(Const<TYPE>::Pi() * x) / (Const<TYPE>::Pi() * x);
+}
+
 }
 
 #endif
