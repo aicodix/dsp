@@ -9,46 +9,18 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #include "const.hh"
 #include "kahan.hh"
+#include "coeffs.hh"
 
 namespace DSP {
 
 template <typename TYPE>
-struct WinFunc
-{
-	virtual TYPE operator () (int, int) = 0;
-	virtual ~WinFunc() = default;
-};
-
-template <int TAPS, typename TYPE>
-class Window
-{
-	TYPE w[TAPS];
-public:
-	Window(WinFunc<TYPE> *func)
-	{
-		for (int n = 0; n < TAPS; ++n)
-			w[n] = (*func)(n, TAPS);
-	}
-	void normalize(TYPE divisor = 1)
-	{
-		TYPE sum(0);
-		for (int n = 0; n < TAPS; ++n)
-			sum += w[n];
-		for (int n = 0; n < TAPS; ++n)
-			w[n] /= divisor * std::abs(sum);
-	}
-	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
-	inline operator const TYPE * () const { return w; }
-};
-
-template <typename TYPE>
-struct Rect : public WinFunc<TYPE>
+struct Rect : public CoeffsFunc<TYPE>
 {
 	TYPE operator () (int n, int N) { return n >= 0 && n < N ? 1 : 0; }
 };
 
 template <typename TYPE>
-struct Hann : public WinFunc<TYPE>
+struct Hann : public CoeffsFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
@@ -57,7 +29,7 @@ struct Hann : public WinFunc<TYPE>
 };
 
 template <typename TYPE>
-struct Hamming : public WinFunc<TYPE>
+struct Hamming : public CoeffsFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
@@ -66,7 +38,7 @@ struct Hamming : public WinFunc<TYPE>
 };
 
 template <typename TYPE>
-class Lanczos : public WinFunc<TYPE>
+class Lanczos : public CoeffsFunc<TYPE>
 {
 	static TYPE sinc(TYPE x)
 	{
@@ -80,7 +52,7 @@ public:
 };
 
 template <typename TYPE>
-class Blackman : public WinFunc<TYPE>
+class Blackman : public CoeffsFunc<TYPE>
 {
 	TYPE a0, a1, a2;
 public:
@@ -95,7 +67,7 @@ public:
 };
 
 template <typename TYPE>
-class Gauss : public WinFunc<TYPE>
+class Gauss : public CoeffsFunc<TYPE>
 {
 	TYPE o;
 public:
@@ -107,7 +79,7 @@ public:
 };
 
 template <typename TYPE>
-class Kaiser : public WinFunc<TYPE>
+class Kaiser : public CoeffsFunc<TYPE>
 {
 	TYPE a;
 	/*
