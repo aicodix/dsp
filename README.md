@@ -21,6 +21,13 @@ Implemented are the follwing [Window functions](https://en.wikipedia.org/wiki/Wi
 * [Gaussian window](https://en.wikipedia.org/wiki/Window_function#Gaussian_window)
 * [Kaiser window](https://en.wikipedia.org/wiki/Window_function#Kaiser_window)
 
+### [filter.hh](filter.hh)
+
+Implemented are the following [finite impulse response](https://en.wikipedia.org/wiki/Finite_impulse_response) [filters](https://en.wikipedia.org/wiki/Filter_(signal_processing)):
+* [low-pass filter](https://en.wikipedia.org/wiki/Low-pass_filter)
+* [high-pass filter](https://en.wikipedia.org/wiki/High-pass_filter)
+* [band-pass filter](https://en.wikipedia.org/wiki/Band-pass_filter)
+
 ### [const.hh](const.hh)
 
 Some constants we need
