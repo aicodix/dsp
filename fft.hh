@@ -36,12 +36,6 @@ static inline TYPE sx(TYPE a)
 	return std::sin(twopi<typename TYPE::value_type>(n, N)) * a;
 }
 
-template <int n, int N, typename TYPE>
-static inline TYPE ex(TYPE a)
-{
-	return exp(TYPE(0, twopi<typename TYPE::value_type>(n, N))) * a;
-}
-
 template <typename TYPE>
 static inline TYPE fiddle(TYPE a, TYPE b)
 {
