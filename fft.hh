@@ -1122,8 +1122,10 @@ public:
 	typedef typename TYPE::value_type value_type;
 	FastFourierTransform()
 	{
-		for (int n = 0; n < BINS; ++n)
-			factors[n] = exp(TYPE(0, value_type(SIGN * FFT::twopi<value_type>(n, BINS))));
+		for (int n = 0; n < BINS; ++n) {
+			value_type a = SIGN * FFT::twopi<value_type>(n, BINS);
+			factors[n] = TYPE(std::cos(a), std::sin(a));
+		}
 	}
 	inline void operator ()(TYPE *out, const TYPE *in)
 	{
