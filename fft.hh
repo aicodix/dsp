@@ -15,7 +15,7 @@ namespace FFT {
 template <typename TYPE>
 static inline TYPE rsqrt2(TYPE a)
 {
-	return (std::sqrt(typename TYPE::value_type(2)) / typename TYPE::value_type(2)) * a;
+	return Const<TYPE>::InvSqrtTwo() * a;
 }
 
 template <typename TYPE>

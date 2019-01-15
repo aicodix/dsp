@@ -19,6 +19,7 @@ struct Const {
 	static constexpr T FourPi()	{ return  12.56637061435917295385; } // 16*a(1)
 	static constexpr T SqrtPi()	{ return   1.77245385090551602730; } // sqrt(4*a(1))
 	static constexpr T SqrtTwoPi()	{ return   2.50662827463100050242; } // sqrt(8*a(1))
+	static constexpr T InvSqrtTwo()	{ return   0.70710678118654752440; } // sqrt(2)/2
 };
 
 }
