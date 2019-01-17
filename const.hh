@@ -1,6 +1,8 @@
 /*
 Some constants
 
+Constants below are the result of truncating the output of "bc -l" computed with "scale=100".
+
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
@@ -10,16 +12,53 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 namespace DSP {
 
 template <typename T>
-struct Const {
-	static constexpr T EighthPi()	{ return   0.39269908169872415481; } // a(1)/2
-	static constexpr T FourthPi()	{ return   0.78539816339744830962; } // 1*a(1)
-	static constexpr T HalfPi()	{ return   1.57079632679489661923; } // 2*a(1)
-	static constexpr T Pi()		{ return   3.14159265358979323846; } // 4*a(1)
-	static constexpr T TwoPi()	{ return   6.28318530717958647693; } // 8*a(1)
-	static constexpr T FourPi()	{ return  12.56637061435917295385; } // 16*a(1)
-	static constexpr T SqrtPi()	{ return   1.77245385090551602730; } // sqrt(4*a(1))
-	static constexpr T SqrtTwoPi()	{ return   2.50662827463100050242; } // sqrt(8*a(1))
-	static constexpr T InvSqrtTwo()	{ return   0.70710678118654752440; } // sqrt(2)/2
+struct Const
+{
+	static constexpr T EighthPi()
+	{
+		// a(1)/2
+		return .3926990816987241548078304229099378605246461749218882276218680740384;
+	}
+	static constexpr T FourthPi()
+	{
+		// a(1)
+		return .7853981633974483096156608458198757210492923498437764552437361480769;
+	}
+	static constexpr T HalfPi()
+	{
+		// 2*a(1)
+		return 1.570796326794896619231321691639751442098584699687552910487472296153;
+	}
+	static constexpr T Pi()
+	{
+		// 4*a(1)
+		return 3.141592653589793238462643383279502884197169399375105820974944592307;
+	}
+	static constexpr T TwoPi()
+	{
+		// 8*a(1)
+		return 6.283185307179586476925286766559005768394338798750211641949889184615;
+	}
+	static constexpr T FourPi()
+	{
+		// 16*a(1)
+		return 12.56637061435917295385057353311801153678867759750042328389977836923;
+	}
+	static constexpr T SqrtPi()
+	{
+		// sqrt(4*a(1))
+		return 1.772453850905516027298167483341145182797549456122387128213807789852;
+	}
+	static constexpr T SqrtTwoPi()
+	{
+		// sqrt(8*a(1))
+		return 2.506628274631000502415765284811045253006986740609938316629923576342;
+	}
+	static constexpr T InvSqrtTwo()
+	{
+		// sqrt(2)/2
+		return .7071067811865475244008443621048490392848359376884740365883398689953;
+	}
 };
 
 }
