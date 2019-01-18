@@ -15,7 +15,7 @@ template <typename TYPE, typename PRECISE>
 void test(int MAX)
 {
 	for (int N = 1; N <= MAX; ++N) {
-		for (int n = 0; n < N; ++n) {
+		for (int n = -N; n <= N; ++n) {
 			PRECISE x = DSP::Const<PRECISE>::TwoPi() * PRECISE(n) / PRECISE(N);
 			PRECISE cos_err = std::abs(DSP::UnitCircle<TYPE>::cos(n, N) - std::cos(x));
 			assert(cos_err < std::numeric_limits<TYPE>::epsilon());

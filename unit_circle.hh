@@ -56,6 +56,10 @@ public:
 	static constexpr TYPE cos(int n, int N)
 	{
 		return
+			8*n <-7*N ? cosine_approx(rad(n+N, N)) :
+			8*n <-5*N ? -sine_approx(rad(4*n+3*N, 4*N)) :
+			8*n <-3*N ? -cosine_approx(rad(2*n+N, 2*N)) :
+			8*n <-1*N ? sine_approx(rad(4*n+N, 4*N)) :
 			8*n < 1*N ? cosine_approx(rad(n, N)) :
 			8*n < 3*N ? -sine_approx(rad(4*n-N, 4*N)) :
 			8*n < 5*N ? -cosine_approx(rad(2*n-N, 2*N)) :
@@ -65,6 +69,10 @@ public:
 	static constexpr TYPE sin(int n, int N)
 	{
 		return
+			8*n <-7*N ? sine_approx(rad(n+N, N)) :
+			8*n <-5*N ? cosine_approx(rad(4*n+3*N, 4*N)) :
+			8*n <-3*N ? -sine_approx(rad(2*n+N, 2*N)) :
+			8*n <-1*N ? -cosine_approx(rad(4*n+N, 4*N)) :
 			8*n < 1*N ? sine_approx(rad(n, N)) :
 			8*n < 3*N ? cosine_approx(rad(4*n-N, 4*N)) :
 			8*n < 5*N ? -sine_approx(rad(2*n-N, 2*N)) :
