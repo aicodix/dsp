@@ -7,33 +7,28 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 #ifndef FFT_HH
 #define FFT_HH
 
+#include "unit_circle.hh"
 #include "const.hh"
 
 namespace DSP {
 namespace FFT {
 
 template <typename TYPE>
-static inline TYPE rsqrt2(TYPE a)
+static constexpr TYPE rsqrt2(TYPE a)
 {
 	return Const<TYPE>::InvSqrtTwo() * a;
 }
 
-template <typename TYPE>
-static inline TYPE twopi(TYPE n, TYPE N)
+template <int n, int N, typename TYPE>
+static constexpr TYPE cx(TYPE a)
 {
-	return Const<TYPE>::TwoPi() * n / N;
+	return UnitCircle<typename TYPE::value_type>::cos(n, N) * a;
 }
 
 template <int n, int N, typename TYPE>
-static inline TYPE cx(TYPE a)
+static constexpr TYPE sx(TYPE a)
 {
-	return std::cos(twopi<typename TYPE::value_type>(n, N)) * a;
-}
-
-template <int n, int N, typename TYPE>
-static inline TYPE sx(TYPE a)
-{
-	return std::sin(twopi<typename TYPE::value_type>(n, N)) * a;
+	return UnitCircle<typename TYPE::value_type>::sin(n, N) * a;
 }
 
 template <typename TYPE>
@@ -1122,10 +1117,8 @@ public:
 	typedef typename TYPE::value_type value_type;
 	FastFourierTransform()
 	{
-		for (int n = 0; n < BINS; ++n) {
-			value_type a = SIGN * FFT::twopi<value_type>(n, BINS);
-			factors[n] = TYPE(std::cos(a), std::sin(a));
-		}
+		for (int n = 0; n < BINS; ++n)
+			factors[n] = TYPE(UnitCircle<value_type>::cos(n, BINS), SIGN * UnitCircle<value_type>::sin(n, BINS));
 	}
 	inline void operator ()(TYPE *out, const TYPE *in)
 	{
