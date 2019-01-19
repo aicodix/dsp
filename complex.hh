@@ -102,27 +102,21 @@ static constexpr Complex<T> operator / (Complex<T> a, Complex<T> b)
 }
 
 template <typename T>
-static constexpr Complex<T> exp(Complex<T> a)
+static constexpr T norm(Complex<T> a)
 {
-	return Complex<T>(exp(a.real()) * cos(a.imag()), exp(a.real()) * sin(a.imag()));
+	return a.real() * a.real() + a.imag() * a.imag();
 }
 
 template <typename T>
 static constexpr T abs(Complex<T> a)
 {
-	return hypot(a.real(), a.imag());
+	return sqrt(norm(a));
 }
 
 template <typename T>
 static constexpr T arg(Complex<T> a)
 {
 	return atan2(a.imag(), a.real());
-}
-
-template <typename T>
-static constexpr T norm(Complex<T> a)
-{
-	return a.real() * a.real() + a.imag() * a.imag();
 }
 
 #endif
