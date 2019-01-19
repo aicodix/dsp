@@ -4,9 +4,7 @@ Resampling by an arbitrary rate difference
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-
-#ifndef RESAMPLER_HH
-#define RESAMPLER_HH
+#pragma once
 
 #include "window.hh"
 #include "spline.hh"
@@ -51,6 +49,4 @@ public:
 };
 
 }
-
-#endif
 

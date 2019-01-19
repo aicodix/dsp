@@ -4,8 +4,7 @@ Some finite impulse response filter functions
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef FILTER_HH
-#define FILTER_HH
+#pragma once
 
 #include "const.hh"
 #include "utils.hh"
@@ -56,6 +55,4 @@ public:
 };
 
 }
-
-#endif
 

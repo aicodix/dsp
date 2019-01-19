@@ -4,8 +4,7 @@ Some little helpers
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef UTILS_HH
-#define UTILS_HH
+#pragma once
 
 #include "const.hh"
 
@@ -48,6 +47,4 @@ TYPE decibel(TYPE v)
 }
 
 }
-
-#endif
 

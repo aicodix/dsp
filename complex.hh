@@ -4,8 +4,7 @@ Fast complex math
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef COMPLEX_HH
-#define COMPLEX_HH
+#pragma once
 
 template <typename T>
 class Complex
@@ -119,4 +118,3 @@ static constexpr T arg(Complex<T> a)
 	return atan2(a.imag(), a.real());
 }
 
-#endif

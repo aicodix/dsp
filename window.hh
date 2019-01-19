@@ -4,8 +4,7 @@ Some window functions
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef WINDOW_HH
-#define WINDOW_HH
+#pragma once
 
 #include "const.hh"
 #include "kahan.hh"
@@ -115,6 +114,4 @@ public:
 };
 
 }
-
-#endif
 

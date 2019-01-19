@@ -6,8 +6,7 @@ Constants below are the result of truncating the output of "bc -l" computed with
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef CONST_HH
-#define CONST_HH
+#pragma once
 
 namespace DSP {
 
@@ -62,6 +61,4 @@ struct Const
 };
 
 }
-
-#endif
 

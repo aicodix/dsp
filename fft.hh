@@ -4,8 +4,7 @@ Mixed-radix decimation-in-time fast Fourier transform
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef FFT_HH
-#define FFT_HH
+#pragma once
 
 #include "unit_circle.hh"
 #include "const.hh"
@@ -1128,4 +1127,3 @@ public:
 
 }
 
-#endif

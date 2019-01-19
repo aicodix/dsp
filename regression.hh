@@ -4,8 +4,7 @@ Regression analysis
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef REGRESSION_HH
-#define REGRESSION_HH
+#pragma once
 
 namespace DSP {
 
@@ -52,6 +51,4 @@ public:
 };
 
 }
-
-#endif
 

@@ -4,8 +4,7 @@ Kahan summation algorithm
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef KAHAN_HH
-#define KAHAN_HH
+#pragma once
 
 namespace DSP {
 
@@ -54,6 +53,4 @@ T kahan_sum(I begin, I end, T init)
 }
 
 }
-
-#endif
 

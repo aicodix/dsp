@@ -4,8 +4,7 @@ Read and write WAV files
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef WAV_HH
-#define WAV_HH
+#pragma once
 
 #include <fstream>
 #include "pcm.hh"
@@ -230,6 +229,4 @@ public:
 };
 
 }
-
-#endif
 

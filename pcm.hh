@@ -4,8 +4,7 @@ Interface for reading and writing PCM data
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef PCM_HH
-#define PCM_HH
+#pragma once
 
 namespace DSP {
 
@@ -33,6 +32,4 @@ struct ReadPCM
 };
 
 }
-
-#endif
 

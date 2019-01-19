@@ -4,8 +4,7 @@ Coefficient array helper
 Copyright 2018 Ahmet Inan <inan@aicodix.de>
 */
 
-#ifndef COEFFS_HH
-#define COEFFS_HH
+#pragma once
 
 namespace DSP {
 
@@ -44,6 +43,4 @@ public:
 };
 
 }
-
-#endif
 
