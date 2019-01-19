@@ -10,6 +10,7 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 #include "const.hh"
 #include "kahan.hh"
 #include "utils.hh"
+#include "unit_circle.hh"
 #include "coeffs.hh"
 
 namespace DSP {
@@ -25,7 +26,7 @@ struct Hann : public CoeffsFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
-		return TYPE(0.5) * (TYPE(1) - std::cos(Const<TYPE>::TwoPi() * TYPE(n) / TYPE(N - 1)));
+		return TYPE(0.5) * (TYPE(1) - UnitCircle<TYPE>::cos(n, N - 1));
 	}
 };
 
@@ -34,16 +35,21 @@ struct Hamming : public CoeffsFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
-		return TYPE(0.54) - TYPE(0.46) * std::cos(Const<TYPE>::TwoPi() * TYPE(n) / TYPE(N - 1));
+		return TYPE(0.54) - TYPE(0.46) * UnitCircle<TYPE>::cos(n, N - 1);
 	}
 };
 
 template <typename TYPE>
-class Lanczos : public CoeffsFunc<TYPE>
+struct Lanczos : public CoeffsFunc<TYPE>
 {
 	TYPE operator () (int n, int N)
 	{
+#if 0
 		return sinc(TYPE(2 * n) / TYPE(N - 1) - TYPE(1));
+#else
+		return 2*n == N-1 ? TYPE(1) :
+			UnitCircle<TYPE>::sin(2*n-(N-1), 2*(N-1)) / (Const<TYPE>::Pi()*TYPE(2*n-(N-1))/TYPE(N-1));
+#endif
 	}
 };
 
@@ -58,7 +64,7 @@ public:
 	Blackman() : Blackman(TYPE(7938) / TYPE(18608), TYPE(9240) / TYPE(18608), TYPE(1430) / TYPE(18608)) {}
 	TYPE operator () (int n, int N)
 	{
-		return a0 - a1 * std::cos(Const<TYPE>::TwoPi() * TYPE(n) / TYPE(N - 1)) + a2 * std::cos(Const<TYPE>::FourPi() * TYPE(n) / TYPE(N - 1));
+		return a0 - a1 * UnitCircle<TYPE>::cos(n, N-1) + a2 * UnitCircle<TYPE>::cos((2*n)%(N-1), N-1);
 	}
 };
 
