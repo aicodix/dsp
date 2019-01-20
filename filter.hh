@@ -8,12 +8,11 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #include "const.hh"
 #include "utils.hh"
-#include "coeffs.hh"
 
 namespace DSP {
 
 template <typename TYPE>
-class LowPass : public CoeffsFunc<TYPE>
+class LowPass
 {
 	TYPE f;
 public:
@@ -26,7 +25,7 @@ public:
 };
 
 template <typename TYPE>
-class HighPass : public CoeffsFunc<TYPE>
+class HighPass
 {
 	TYPE f;
 public:
@@ -41,7 +40,7 @@ public:
 };
 
 template <typename TYPE>
-class BandPass : public CoeffsFunc<TYPE>
+class BandPass
 {
 	TYPE f0, f1;
 public:

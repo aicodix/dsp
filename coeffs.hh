@@ -8,24 +8,19 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 namespace DSP {
 
-template <typename TYPE>
-struct CoeffsFunc
-{
-	virtual TYPE operator () (int, int) = 0;
-	virtual ~CoeffsFunc() = default;
-};
-
 template <int TAPS, typename TYPE>
 class Coeffs
 {
 	TYPE w[TAPS];
 public:
-	Coeffs(CoeffsFunc<TYPE> *func)
+	template <typename FUNC>
+	Coeffs(FUNC *func)
 	{
 		for (int n = 0; n < TAPS; ++n)
 			w[n] = (*func)(n, TAPS);
 	}
-	Coeffs(CoeffsFunc<TYPE> *func0, CoeffsFunc<TYPE> *func1)
+	template <typename FUNC0, typename FUNC1>
+	Coeffs(FUNC0 *func0, FUNC1 *func1)
 	{
 		for (int n = 0; n < TAPS; ++n)
 			w[n] = (*func0)(n, TAPS) * (*func1)(n, TAPS);

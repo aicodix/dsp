@@ -10,18 +10,17 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 #include "kahan.hh"
 #include "utils.hh"
 #include "unit_circle.hh"
-#include "coeffs.hh"
 
 namespace DSP {
 
 template <typename TYPE>
-struct Rect : public CoeffsFunc<TYPE>
+struct Rect
 {
 	TYPE operator () (int n, int N) { return n >= 0 && n < N ? 1 : 0; }
 };
 
 template <typename TYPE>
-struct Hann : public CoeffsFunc<TYPE>
+struct Hann
 {
 	TYPE operator () (int n, int N)
 	{
@@ -30,7 +29,7 @@ struct Hann : public CoeffsFunc<TYPE>
 };
 
 template <typename TYPE>
-struct Hamming : public CoeffsFunc<TYPE>
+struct Hamming
 {
 	TYPE operator () (int n, int N)
 	{
@@ -39,7 +38,7 @@ struct Hamming : public CoeffsFunc<TYPE>
 };
 
 template <typename TYPE>
-struct Lanczos : public CoeffsFunc<TYPE>
+struct Lanczos
 {
 	TYPE operator () (int n, int N)
 	{
@@ -53,7 +52,7 @@ struct Lanczos : public CoeffsFunc<TYPE>
 };
 
 template <typename TYPE>
-class Blackman : public CoeffsFunc<TYPE>
+class Blackman
 {
 	TYPE a0, a1, a2;
 public:
@@ -68,7 +67,7 @@ public:
 };
 
 template <typename TYPE>
-class Gauss : public CoeffsFunc<TYPE>
+class Gauss
 {
 	TYPE o;
 public:
@@ -80,7 +79,7 @@ public:
 };
 
 template <typename TYPE>
-class Kaiser : public CoeffsFunc<TYPE>
+class Kaiser
 {
 	TYPE a;
 	/*
