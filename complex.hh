@@ -12,7 +12,7 @@ class Complex
 	T re, im;
 public:
 	typedef T value_type;
-	constexpr Complex() : re(0), im(0) {}
+	constexpr Complex() /*: re(0), im(0)*/ {}
 	constexpr Complex(T r) : re(r), im(0) {}
 	constexpr Complex(T r, T i) : re(r), im(i) {}
 	constexpr T real() const { return re; }
