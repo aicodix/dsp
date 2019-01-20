@@ -25,13 +25,13 @@ AB lerp(X x, AB a, AB b)
 template <typename TYPE>
 TYPE normal_pdf(TYPE x, TYPE m, TYPE s)
 {
-	return std::exp(-std::pow((x - m) / s, TYPE(2)) / TYPE(2)) / (Const<TYPE>::SqrtTwoPi() * s);
+	return exp(-pow((x - m) / s, TYPE(2)) / TYPE(2)) / (Const<TYPE>::SqrtTwoPi() * s);
 }
 
 template <typename TYPE>
 TYPE sinc(TYPE x)
 {
-	return TYPE(0) == x ? TYPE(1) : std::sin(Const<TYPE>::Pi() * x) / (Const<TYPE>::Pi() * x);
+	return TYPE(0) == x ? TYPE(1) : sin(Const<TYPE>::Pi() * x) / (Const<TYPE>::Pi() * x);
 }
 
 template <typename TYPE>
@@ -43,7 +43,7 @@ TYPE delta(TYPE x)
 template <typename TYPE>
 TYPE decibel(TYPE v)
 {
-	return TYPE(10) * std::log10(v);
+	return TYPE(10) * log10(v);
 }
 
 }

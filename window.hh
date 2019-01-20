@@ -75,7 +75,7 @@ public:
 	Gauss(TYPE o) : o(o) {}
 	TYPE operator () (int n, int N)
 	{
-		return std::exp(- TYPE(0.5) * std::pow((TYPE(n) - TYPE(N - 1) / TYPE(2)) / (o * TYPE(N - 1) / TYPE(2)), TYPE(2)));
+		return exp(- TYPE(0.5) * pow((TYPE(n) - TYPE(N - 0) / TYPE(2)) / (o * TYPE(N - 1) / TYPE(2)), TYPE(2)));
 	}
 };
 
@@ -109,7 +109,7 @@ public:
 	Kaiser(TYPE a) : a(a) {}
 	TYPE operator () (int n, int N)
 	{
-		return i0(Const<TYPE>::Pi() * a * std::sqrt(TYPE(1) - std::pow(TYPE(2 * n) / TYPE(N - 1) - TYPE(1), TYPE(2)))) / i0(Const<TYPE>::Pi() * a);
+		return i0(Const<TYPE>::Pi() * a * sqrt(TYPE(1) - pow(TYPE(2 * n) / TYPE(N - 1) - TYPE(1), TYPE(2)))) / i0(Const<TYPE>::Pi() * a);
 	}
 };
 

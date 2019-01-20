@@ -36,7 +36,7 @@ public:
 		for (int n = 0; n < TAPS; ++n)
 			sum += w[n];
 		for (int n = 0; n < TAPS; ++n)
-			w[n] /= divisor * std::abs(sum);
+			w[n] /= divisor * abs(sum);
 	}
 	inline TYPE operator () (int n) { return n >= 0 && n < TAPS ? w[n] : 0; }
 	inline operator const TYPE * () const { return w; }
