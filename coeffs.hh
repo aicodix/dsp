@@ -8,7 +8,7 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 namespace DSP {
 
-template <int TAPS, typename TYPE>
+template <int TAPS, typename TYPE, bool NORMALIZE = false>
 class Coeffs
 {
 	TYPE w[TAPS];
@@ -18,12 +18,16 @@ public:
 	{
 		for (int n = 0; n < TAPS; ++n)
 			w[n] = (*func)(n, TAPS);
+		if (NORMALIZE)
+			normalize();
 	}
 	template <typename FUNC0, typename FUNC1>
 	Coeffs(FUNC0 *func0, FUNC1 *func1)
 	{
 		for (int n = 0; n < TAPS; ++n)
 			w[n] = (*func0)(n, TAPS) * (*func1)(n, TAPS);
+		if (NORMALIZE)
+			normalize();
 	}
 	void normalize(TYPE divisor = 1)
 	{
