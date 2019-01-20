@@ -6,6 +6,8 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
+namespace DSP {
+
 template <typename T>
 class Complex
 {
@@ -116,5 +118,7 @@ template <typename T>
 static constexpr T arg(Complex<T> a)
 {
 	return atan2(a.imag(), a.real());
+}
+
 }
 
