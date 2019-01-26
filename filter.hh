@@ -8,6 +8,7 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #include "const.hh"
 #include "utils.hh"
+#include "unit_circle.hh"
 
 namespace DSP {
 
@@ -21,6 +22,22 @@ public:
 	{
 		TYPE x = TYPE(n) - TYPE(0.5) * TYPE(N - 1);
 		return f * sinc(f * x);
+	}
+};
+
+template <typename TYPE>
+class LowPass2
+{
+	int num, den;
+	TYPE fac;
+public:
+	LowPass2(int num, int den) : num(num), den(den), fac(TYPE(2*num)/TYPE(den)) {}
+	TYPE operator () (int n, int N)
+	{
+		int twox = 2 * n - (N - 1);
+		return !twox ? fac : fac *
+			UnitCircle<TYPE>::sin((twox * num) % (2 * den), 2 * den) /
+			(Const<TYPE>::HalfPi() * fac * TYPE(twox));
 	}
 };
 
