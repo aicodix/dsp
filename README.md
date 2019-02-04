@@ -28,6 +28,18 @@ Implemented are the following [finite impulse response](https://en.wikipedia.org
 * [high-pass filter](https://en.wikipedia.org/wiki/High-pass_filter)
 * [band-pass filter](https://en.wikipedia.org/wiki/Band-pass_filter)
 
+### [ema.hh](ema.hh)
+
+The [exponential moving average](https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average) is an [infinite impulse response](https://en.wikipedia.org/wiki/Infinite_impulse_response) [low-pass filter](https://en.wikipedia.org/wiki/Low-pass_filter).
+There is also support for cascading, to improve [roll-off](https://en.wikipedia.org/wiki/Roll-off) while a correction factor helps to keep the same [cutoff frequency](https://en.wikipedia.org/wiki/Cutoff_frequency).
+
+### [biquad.hh](biquad.hh)
+
+The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite_impulse_response) [digital biquad filter](https://en.wikipedia.org/wiki/Digital_biquad_filter) implementations are available:
+
+* [second-order Butterworth low pass filter](https://en.wikipedia.org/wiki/Butterworth_filter)
+* [2n-order Butterworth cascade of second-order low pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
+
 ### [const.hh](const.hh)
 
 Some constants we need
