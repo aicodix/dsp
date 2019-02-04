@@ -40,6 +40,10 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 * [second-order Butterworth low pass filter](https://en.wikipedia.org/wiki/Butterworth_filter)
 * [2n-order Butterworth cascade of second-order low pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
 
+### [phasor.hh](phasor.hh)
+
+[Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) implemented using a [phasor](https://en.wikipedia.org/wiki/Phasor) and [complex multiplication](https://en.wikipedia.org/wiki/Complex_number#Multiplication) instead of a [lookup table](https://en.wikipedia.org/wiki/Lookup_table).
+
 ### [const.hh](const.hh)
 
 Some constants we need
