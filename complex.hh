@@ -103,6 +103,12 @@ static constexpr Complex<T> operator / (Complex<T> a, Complex<T> b)
 }
 
 template <typename T>
+static constexpr Complex<T> conj(Complex<T> a)
+{
+	return Complex<T>(a.real(), -a.imag());
+}
+
+template <typename T>
 static constexpr T norm(Complex<T> a)
 {
 	return a.real() * a.real() + a.imag() * a.imag();
