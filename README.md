@@ -44,6 +44,14 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 
 [Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) implemented using a [phasor](https://en.wikipedia.org/wiki/Phasor) and [complex multiplication](https://en.wikipedia.org/wiki/Complex_number#Multiplication) instead of a [lookup table](https://en.wikipedia.org/wiki/Lookup_table).
 
+### [fmd.hh](fmd.hh)
+
+[Frequency modulation](https://en.wikipedia.org/wiki/Frequency_modulation) [demodulation](https://en.wikipedia.org/wiki/Demodulation) with and without [atan2](https://en.wikipedia.org/wiki/Atan2).
+
+### [atan2.hh](atan2.hh)
+
+[atan](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) and [atan2](https://en.wikipedia.org/wiki/Atan2).
+
 ### [const.hh](const.hh)
 
 Some constants we need
