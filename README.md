@@ -48,6 +48,10 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 
 [Frequency modulation](https://en.wikipedia.org/wiki/Frequency_modulation) [demodulation](https://en.wikipedia.org/wiki/Demodulation) with and without [atan2](https://en.wikipedia.org/wiki/Atan2).
 
+### [amd.hh](amd.hh)
+
+[Amplitude modulation](https://en.wikipedia.org/wiki/Amplitude_modulation) [demodulation](https://en.wikipedia.org/wiki/Demodulation) with [automatic gain control](https://en.wikipedia.org/wiki/Automatic_gain_control).
+
 ### [atan2.hh](atan2.hh)
 
 [atan](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) and [atan2](https://en.wikipedia.org/wiki/Atan2).
