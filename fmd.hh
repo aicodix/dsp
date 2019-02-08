@@ -15,7 +15,7 @@ class FMD1
 	typedef typename complex_type::value_type value_type;
 	value_type prev;
 	value_type scale;
-	value_type unwrap(value_type angle)
+	value_type wrap_around(value_type angle)
 	{
 		if (angle < -DSP::Const<value_type>::Pi())
 			return angle + DSP::Const<value_type>::TwoPi();
@@ -35,7 +35,7 @@ public:
 	{
 		value_type phase = arg(input);
 		value_type delta = phase - prev;
-		delta = unwrap(delta);
+		delta = wrap_around(delta);
 		prev = phase;
 		return scale * delta;
 	}
