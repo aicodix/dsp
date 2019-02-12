@@ -56,6 +56,14 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 
 [atan](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) and [atan2](https://en.wikipedia.org/wiki/Atan2).
 
+### [trigger.hh](trigger.hh)
+
+Implemented are the following [trigger functions](https://en.wikipedia.org/wiki/Flip-flop_(electronics)):
+
+* [Schmitt trigger](https://en.wikipedia.org/wiki/Schmitt_trigger)
+* [Rising edge trigger](https://en.wikipedia.org/wiki/Signal_edge)
+* [Falling edge trigger](https://en.wikipedia.org/wiki/Signal_edge)
+
 ### [const.hh](const.hh)
 
 Some constants we need
