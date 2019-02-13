@@ -56,6 +56,13 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 
 [atan](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) and [atan2](https://en.wikipedia.org/wiki/Atan2).
 
+### [cordic.hh](cordic.hh)
+
+When working on a device where multiplication is expensive, the [CORDIC](https://en.wikipedia.org/wiki/CORDIC) comes in handy for computing [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions).
+
+The following implementations are a good (max 1 LSB error at full range) starting point for your own designs:
+* [Fixed-point](https://en.wikipedia.org/wiki/Fixed-point_arithmetic) [atan2](https://en.wikipedia.org/wiki/Atan2) implementation
+
 ### [trigger.hh](trigger.hh)
 
 Implemented are the following [trigger functions](https://en.wikipedia.org/wiki/Flip-flop_(electronics)):
