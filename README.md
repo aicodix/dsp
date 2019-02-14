@@ -71,6 +71,10 @@ Implemented are the following [trigger functions](https://en.wikipedia.org/wiki/
 * [Rising edge trigger](https://en.wikipedia.org/wiki/Signal_edge)
 * [Falling edge trigger](https://en.wikipedia.org/wiki/Signal_edge)
 
+### [sma.hh](sma.hh)
+
+The [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_moving_average) gives us the mean of the last N data points.
+
 ### [const.hh](const.hh)
 
 Some constants we need
