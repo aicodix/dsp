@@ -37,8 +37,8 @@ There is also support for cascading, to improve [roll-off](https://en.wikipedia.
 
 The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite_impulse_response) [digital biquad filter](https://en.wikipedia.org/wiki/Digital_biquad_filter) implementations are available:
 
-* [second-order Butterworth low pass filter](https://en.wikipedia.org/wiki/Butterworth_filter)
-* [2n-order Butterworth cascade of second-order low pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
+* [second-order Butterworth low or high pass filter](https://en.wikipedia.org/wiki/Butterworth_filter)
+* [2n-order Butterworth cascade of second-order low or high pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
 
 ### [phasor.hh](phasor.hh)
 
