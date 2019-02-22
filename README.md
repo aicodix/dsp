@@ -39,6 +39,7 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 
 * [second-order Butterworth low or high pass filter](https://en.wikipedia.org/wiki/Butterworth_filter)
 * [2n-order Butterworth cascade of second-order low or high pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
+* [second-order notch filter](https://en.wikipedia.org/wiki/Band-stop_filter)
 
 ### [phasor.hh](phasor.hh)
 
