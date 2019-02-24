@@ -22,12 +22,16 @@ class EMA
 		return x-VALUE(1)+sqrt(x*(x-VALUE(4))+VALUE(3));
 	}
 public:
-	EMA() : prev(0), alpha(1)
+	constexpr EMA(TYPE prev = TYPE(0), VALUE alpha = VALUE(1)) : prev(prev), alpha(alpha)
 	{
 	}
 	void cutoff(int n, int N)
 	{
 		alpha = cutoff_alpha(n, N);
+	}
+	void samples(int s)
+	{
+		alpha = VALUE(1) / VALUE(s);
 	}
 	TYPE operator()(TYPE input)
 	{
