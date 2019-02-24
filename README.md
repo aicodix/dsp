@@ -41,6 +41,10 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 * [2n-order Butterworth cascade of second-order low or high pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
 * [second-order notch filter](https://en.wikipedia.org/wiki/Band-stop_filter)
 
+### [blockdc.hh](blockdc.hh)
+
+A [notch filter at DC](https://en.wikipedia.org/wiki/Band-stop_filter) helps removing [DC bias](https://en.wikipedia.org/wiki/DC_bias).
+
 ### [phasor.hh](phasor.hh)
 
 [Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) implemented using a [phasor](https://en.wikipedia.org/wiki/Phasor) and [complex multiplication](https://en.wikipedia.org/wiki/Complex_number#Multiplication) instead of a [lookup table](https://en.wikipedia.org/wiki/Lookup_table).
