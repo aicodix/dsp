@@ -45,6 +45,10 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 
 A [notch filter at DC](https://en.wikipedia.org/wiki/Band-stop_filter) helps removing [DC bias](https://en.wikipedia.org/wiki/DC_bias).
 
+### [normalize.hh](normalize.hh)
+
+Normalizers for [periodic](https://en.wikipedia.org/wiki/Periodic_function) signals.
+
 ### [phasor.hh](phasor.hh)
 
 [Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) implemented using a [phasor](https://en.wikipedia.org/wiki/Phasor) and [complex multiplication](https://en.wikipedia.org/wiki/Complex_number#Multiplication) instead of a [lookup table](https://en.wikipedia.org/wiki/Lookup_table).
