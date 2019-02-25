@@ -17,7 +17,7 @@ class NormalizeSine
 	DSP::BlockDC<TYPE, TYPE> hpf;
 	DSP::EMA<TYPE, TYPE> lpf;
 public:
-	constexpr NormalizeSine() : lpf(1)
+	constexpr NormalizeSine() : lpf(0.5)
 	{
 	}
 	void samples(int s)
