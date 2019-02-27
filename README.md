@@ -66,6 +66,10 @@ Normalizers for [periodic](https://en.wikipedia.org/wiki/Periodic_function) sign
 
 [atan](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions) and [atan2](https://en.wikipedia.org/wiki/Atan2).
 
+### [exp.hh](exp.hh)
+
+[Exponentiation](https://en.wikipedia.org/wiki/Exponentiation) approximations.
+
 ### [cordic.hh](cordic.hh)
 
 When working on a device where multiplication is expensive, the [CORDIC](https://en.wikipedia.org/wiki/CORDIC) comes in handy for computing [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions).
