@@ -7,6 +7,7 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 #pragma once
 
 #include "const.hh"
+#include "decibel.hh"
 #include "unit_circle.hh"
 
 namespace DSP {
@@ -53,9 +54,9 @@ public:
 		a1a0 = a1 / a0;
 		a2a0 = a2 / a0;
 	}
-	void notch(int n, int N, VALUE Q)
+	void notch(int n, int N, VALUE QdB)
 	{
-		VALUE alpha = UnitCircle<VALUE>::sin(n, N) / (VALUE(2) * Q),
+		VALUE alpha = UnitCircle<VALUE>::sin(n, N) / (VALUE(2) * idecibel(QdB)),
 			cn = UnitCircle<VALUE>::cos(n, N),
 			b0 = VALUE(1),
 			b1 = -VALUE(2) * cn,
@@ -69,9 +70,9 @@ public:
 		a1a0 = a1 / a0;
 		a2a0 = a2 / a0;
 	}
-	void bandpass(int n, int N, VALUE Q)
+	void bandpass(int n, int N, VALUE QdB)
 	{
-		VALUE alpha = UnitCircle<VALUE>::sin(n, N) / (VALUE(2) * Q),
+		VALUE alpha = UnitCircle<VALUE>::sin(n, N) / (VALUE(2) * idecibel(QdB)),
 			cn = UnitCircle<VALUE>::cos(n, N),
 			b0 = alpha,
 			b1 = VALUE(0),
