@@ -136,6 +136,10 @@ Some everyday helpers:
 When working with [Analog-to-digital](https://en.wikipedia.org/wiki/Analog-to-digital_converter) and [Digital-to-analog](https://en.wikipedia.org/wiki/Digital-to-analog_converter) converters, we often face the ugly truth, that we can't always have a precise [Sampling](https://en.wikipedia.org/wiki/Sampling_(signal_processing)) rate.
 But if we can estimate the Sampling frequency offset, we can correct it by [Resampling](https://en.wikipedia.org/wiki/Sample-rate_conversion) the sampled data.
 
+### [fdzp.hh](fdzp.hh)
+
+Interpolation via frequency-domain zero padding.
+
 ### [unit_circle.hh](unit_circle.hh)
 
 Sometimes we only need [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions) that stay on the [unit circle](https://en.wikipedia.org/wiki/Unit_circle):
