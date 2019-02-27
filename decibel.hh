@@ -6,6 +6,8 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
+#include "exp.hh"
+
 namespace DSP {
 
 template <typename TYPE>
@@ -37,7 +39,7 @@ TYPE decibel(TYPE v)
 template <typename TYPE>
 TYPE idecibel(TYPE dB)
 {
-	return pow(TYPE(10), dB / TYPE(10));
+	return exp10(dB / TYPE(10));
 }
 
 }
