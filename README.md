@@ -122,7 +122,10 @@ Some everyday helpers:
 * [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) of the [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution)
 * [sinc function](https://en.wikipedia.org/wiki/Sinc_function)
 * [delta function](https://en.wikipedia.org/wiki/Dirac_delta_function)
-* [decibel function](https://en.wikipedia.org/wiki/Decibel)
+
+### [decibel.hh](decibel.hh)
+
+[Decibel](https://en.wikipedia.org/wiki/Decibel) calculation helpers.
 
 ### [resampler.hh](resampler.hh)
 
