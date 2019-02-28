@@ -22,19 +22,14 @@ public:
 	void operator ()(CMPLX *output, const CMPLX *input)
 	{
 		fwd(tmp, input);
-		if (BINS&1) {
-			for (int i = 1; i < BINS/2; ++i)
-				tmp[BINS*FACT-BINS/2+i] = tmp[BINS/2+1+i];
-			for (int i = 1; i < BINS/2; ++i)
-				tmp[BINS/2+1+i] = 0;
-		} else {
+		if (!(BINS&1)) {
 			tmp[BINS/2] *= VALUE(0.5);
 			tmp[BINS*FACT-BINS/2] = tmp[BINS/2];
-			for (int i = 1; i < BINS/2; ++i)
-				tmp[BINS*FACT-BINS/2+i] = tmp[BINS/2+i];
-			for (int i = 1; i < BINS/2; ++i)
-				tmp[BINS/2+i] = 0;
 		}
+		for (int i = (BINS+1)/2+1; i < BINS; ++i)
+			tmp[BINS*(FACT-1)+i] = tmp[i];
+		for (int i = (BINS+1)/2+1; i < BINS; ++i)
+			tmp[i] = 0;
 		bwd(output, tmp);
 		for (int i = 0; i < BINS * FACT; ++i)
 			output[i] *= SCALE;
