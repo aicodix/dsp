@@ -89,6 +89,13 @@ Implemented are the following [trigger functions](https://en.wikipedia.org/wiki/
 
 The [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_moving_average) gives us the mean of the last N data points.
 
+### [calculus.hh](calculus.hh)
+
+Some [calculus](https://en.wikipedia.org/wiki/Calculus) functions:
+
+* [Integrator](https://en.wikipedia.org/wiki/Integrator)
+* [Differentiator](https://en.wikipedia.org/wiki/Differentiator)
+
 ### [const.hh](const.hh)
 
 Some constants we need
