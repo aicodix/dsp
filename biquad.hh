@@ -86,6 +86,22 @@ public:
 		a1a0 = a1 / a0;
 		a2a0 = a2 / a0;
 	}
+	void allpass(int n, int N, VALUE QdB)
+	{
+		VALUE alpha = UnitCircle<VALUE>::sin(n, N) / (VALUE(2) * idecibel(QdB)),
+			cn = UnitCircle<VALUE>::cos(n, N),
+			b0 = VALUE(1) - alpha,
+			b1 = -VALUE(2) * cn,
+			b2 = VALUE(1) + alpha,
+			a0 = VALUE(1) + alpha,
+			a1 = -VALUE(2) * cn,
+			a2 = VALUE(1) - alpha;
+		b0a0 = b0 / a0;
+		b1a0 = b1 / a0;
+		b2a0 = b2 / a0;
+		a1a0 = a1 / a0;
+		a2a0 = a2 / a0;
+	}
 	TYPE operator()(TYPE x0)
 	{
 		TYPE y0 = b0a0*x0 + b1a0*x1 + b2a0*x2

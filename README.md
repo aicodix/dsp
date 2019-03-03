@@ -41,6 +41,7 @@ The following [infinite impulse response](https://en.wikipedia.org/wiki/Infinite
 * [2n-order Butterworth cascade of second-order low or high pass filters](https://en.wikipedia.org/wiki/Butterworth_filter)
 * [second-order notch filter](https://en.wikipedia.org/wiki/Band-stop_filter)
 * [second-order bandpass filter](https://en.wikipedia.org/wiki/Band-pass_filter)
+* [second-order allpass filter](https://en.wikipedia.org/wiki/All-pass_filter)
 
 ### [blockdc.hh](blockdc.hh)
 
