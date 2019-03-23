@@ -26,6 +26,10 @@ public:
 			UnitCircle<value_type>::cos(n, N),
 			UnitCircle<value_type>::sin(n, N));
 	}
+	void omega(value_type v)
+	{
+		delta = complex_type(cos(v), sin(v));
+	}
 	complex_type operator()()
 	{
 		complex_type tmp = prev;
