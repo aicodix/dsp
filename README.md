@@ -27,6 +27,7 @@ Implemented are the following [finite impulse response](https://en.wikipedia.org
 * [low-pass filter](https://en.wikipedia.org/wiki/Low-pass_filter)
 * [high-pass filter](https://en.wikipedia.org/wiki/High-pass_filter)
 * [band-pass filter](https://en.wikipedia.org/wiki/Band-pass_filter)
+* [Hilbert-transform filter](https://en.wikipedia.org/wiki/Hilbert_transform)
 
 ### [ema.hh](ema.hh)
 

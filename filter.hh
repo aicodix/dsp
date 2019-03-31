@@ -87,5 +87,20 @@ public:
 	}
 };
 
+template <typename TYPE>
+struct HilbertTransform
+{
+	TYPE operator () (int n, int N)
+	{
+		if (N&1) {
+			int x = n - (N - 1) / 2;
+			return x&1 ? TYPE(2) / (Const<TYPE>::Pi() * TYPE(x)) : TYPE(0);
+		} else {
+			TYPE x = TYPE(n) - TYPE(0.5) * TYPE(N - 1);
+			return TYPE(1) / (Const<TYPE>::Pi() * x);
+		}
+	}
+};
+
 }
 
