@@ -57,6 +57,23 @@ public:
 };
 
 template <typename TYPE>
+class HighPass2
+{
+	int num, den;
+	TYPE fac;
+public:
+	HighPass2(int num, int den) : num(num), den(den), fac(TYPE(2*num)/TYPE(den)) {}
+	TYPE operator () (int n, int N)
+	{
+		int twox = 2 * n - (N - 1);
+		return !twox ? TYPE(1) - fac :
+			UnitCircle<TYPE>::sin(twox % 4, 4) / (Const<TYPE>::HalfPi() * TYPE(twox))
+			- fac * UnitCircle<TYPE>::sin((twox * num) % (2 * den), 2 * den) /
+			(Const<TYPE>::HalfPi() * fac * TYPE(twox));
+	}
+};
+
+template <typename TYPE>
 class BandPass
 {
 	TYPE f0, f1;
