@@ -104,11 +104,15 @@ class Kaiser
 		}
 		return sum();
 	}
+	static TYPE sqr(TYPE x)
+	{
+		return x * x;
+	}
 public:
 	Kaiser(TYPE a) : a(a) {}
 	TYPE operator () (int n, int N)
 	{
-		return i0(Const<TYPE>::Pi() * a * sqrt(TYPE(1) - pow(TYPE(2 * n) / TYPE(N - 1) - TYPE(1), TYPE(2)))) / i0(Const<TYPE>::Pi() * a);
+		return i0(Const<TYPE>::Pi() * a * sqrt(TYPE(1) - sqr(TYPE(2 * n) / TYPE(N - 1) - TYPE(1)))) / i0(Const<TYPE>::Pi() * a);
 	}
 };
 
