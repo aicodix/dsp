@@ -56,6 +56,10 @@ Normalizers for [periodic](https://en.wikipedia.org/wiki/Periodic_function) sign
 
 [Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) implemented using a [phasor](https://en.wikipedia.org/wiki/Phasor) and [complex multiplication](https://en.wikipedia.org/wiki/Complex_number#Multiplication) instead of a [lookup table](https://en.wikipedia.org/wiki/Lookup_table).
 
+### [cdc.hh](cdc.hh)
+
+Fs/4 [Complex down conversion](https://en.wikipedia.org/wiki/Digital_down_converter)
+
 ### [fmd.hh](fmd.hh)
 
 [Frequency modulation](https://en.wikipedia.org/wiki/Frequency_modulation) [demodulation](https://en.wikipedia.org/wiki/Demodulation) with and without [atan2](https://en.wikipedia.org/wiki/Atan2).
