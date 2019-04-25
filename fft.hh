@@ -1125,5 +1125,40 @@ public:
 	}
 };
 
+template <int BINS, typename TYPE>
+class RealToHalfComplexTransform
+{
+	static_assert(BINS%2==0, "BINS must be even");
+	static const int N = BINS / 2;
+	TYPE factors[N];
+	TYPE A[N], B[N];
+public:
+	typedef typename TYPE::value_type value_type;
+	RealToHalfComplexTransform()
+	{
+		for (int n = 0; n < N; ++n)
+			factors[n] = TYPE(UnitCircle<value_type>::cos(n, N), -UnitCircle<value_type>::sin(n, N));
+		for (int n = 0; n < N; ++n) {
+			TYPE sincos(
+				UnitCircle<value_type>::sin(n, BINS),
+				UnitCircle<value_type>::cos(n, BINS)
+			);
+			A[n] = value_type(0.5) * (TYPE(1) - sincos);
+			B[n] = value_type(0.5) * (TYPE(1) + sincos);
+		}
+	}
+	inline void operator ()(TYPE *out, const value_type *in)
+	{
+		FFT::Dit<FFT::split(N), N, 1, TYPE, -1>::dit(out, reinterpret_cast<const TYPE *>(in), factors);
+		out[N] = value_type(0.5) * (out[0].real() - out[0].imag());
+		out[0] = value_type(0.5) * (out[0].real() + out[0].imag());
+		for (int i = 1; i <= N/2; ++i) {
+			TYPE tmp = out[i]*A[i] + conj(out[N-i])*B[i];
+			out[N-i] = out[N-i]*A[N-i] + conj(out[i])*B[N-i];
+			out[i] = tmp;
+		}
+	}
+};
+
 }
 
