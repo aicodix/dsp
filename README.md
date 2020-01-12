@@ -116,7 +116,8 @@ Read and write [WAV](https://en.wikipedia.org/wiki/WAV) files
 
 ### [spline.hh](spline.hh)
 
-Algorithm for computing uniform and [natural cubic splines](https://en.wikipedia.org/wiki/Spline_(mathematics)#Algorithm_for_computing_natural_cubic_splines)
+* Algorithm for computing uniform and [natural cubic splines](https://en.wikipedia.org/wiki/Spline_(mathematics)#Algorithm_for_computing_natural_cubic_splines)
+* [Cubic Hermite spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline)
 Very useful for data interpolation.
 
 ### [regression.hh](regression.hh)

@@ -52,5 +52,68 @@ public:
 	}
 };
 
+template <typename TYPE>
+struct CubicHermiteSpline
+{
+	static constexpr TYPE h00(TYPE t)
+	{
+		return (TYPE(1) + TYPE(2) * t) * (TYPE(1) - t) * (TYPE(1) - t);
+	}
+	static constexpr TYPE h10(TYPE t)
+	{
+		return t * (TYPE(1) - t) * (TYPE(1) - t);
+	}
+	static constexpr TYPE h01(TYPE t)
+	{
+		return t * t * (TYPE(3) - TYPE(2) * t);
+	}
+	static constexpr TYPE h11(TYPE t)
+	{
+		return t * t * (t - TYPE(1));
+	}
+	static constexpr TYPE left(const TYPE *x, const TYPE *y)
+	{
+		return (y[0] - y[-1]) / (x[0] - x[-1]);
+	}
+	static constexpr TYPE right(const TYPE *x, const TYPE *y)
+	{
+		return (y[1] - y[0]) / (x[1] - x[0]);
+	}
+	static constexpr TYPE central(const TYPE *x, const TYPE *y)
+	{
+		return TYPE(0.5) * (left(x, y) + right(x, y));
+	}
+	static constexpr TYPE eval(const TYPE *x, const TYPE *y, TYPE t, int k, int n)
+	{
+		return k < 1 ?
+			h00(t) * y[0] + h10(t) * (x[1]-x[0]) * right(x, y) + h01(t) * y[1] + h11(t) * (x[1]-x[0]) * central(x+1, y+1)
+		: k < n-2 ?
+			h00(t) * y[k] + h10(t) * (x[k+1]-x[k]) * central(x+k, y+k) + h01(t) * y[k+1] + h11(t) * (x[k+1]-x[k]) * central(x+k+1, y+k+1)
+		:
+			h00(t) * y[n-2] + h10(t) * (x[n-1]-x[n-2]) * central(x+n-2, y+n-2) + h01(t) * y[n-1] + h11(t) * (x[n-1]-x[n-2]) * left(x+n-1, y+n-1);
+	}
+	static constexpr TYPE left(const TYPE *y)
+	{
+		return y[0] - y[-1];
+	}
+	static constexpr TYPE right(const TYPE *y)
+	{
+		return y[1] - y[0];
+	}
+	static constexpr TYPE central(const TYPE *y)
+	{
+		return TYPE(0.5) * (y[1] - y[-1]);
+	}
+	static constexpr TYPE eval(const TYPE *y, TYPE t, int k, int n)
+	{
+		return k < 1 ?
+			h00(t) * y[0] + h10(t) * right(y) + h01(t) * y[1] + h11(t) * central(y+1)
+		: k < n-2 ?
+			h00(t) * y[k] + h10(t) * central(y+k) + h01(t) * y[k+1] + h11(t) * central(y+k+1)
+		:
+			h00(t) * y[n-2] + h10(t) * central(y+n-2) + h01(t) * y[n-1] + h11(t) * left(y+n-1);
+	}
+};
+
 }
 
