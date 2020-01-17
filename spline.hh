@@ -102,7 +102,7 @@ struct CubicHermiteSpline
 		: k < n ?
 			eval(X, Y, (x - X[k-1]) / (X[k] - X[k-1]), k-1, n)
 		:
-			eval(X, Y, (x - X[n-2]) / (X[n-1] - X[n-2]), n-2, n);
+			eval(X, Y, (x - X[n-2]) / (X[n-1] - X[n-2]), n-1, n);
 	}
 	static constexpr OTYPE left(const OTYPE *Y)
 	{
