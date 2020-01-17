@@ -113,6 +113,18 @@ struct CubicHermiteSpline
 		:
 			h00(t) * y[n-2] + h10(t) * central(y+n-2) + h01(t) * y[n-1] + h11(t) * left(y+n-1);
 	}
+	static OTYPE eval(const OTYPE *y, ITYPE x, int n, ITYPE x0 = 0, ITYPE dx = 1)
+	{
+		ITYPE tx = (x - x0) / dx;
+		int k = tx;
+		ITYPE t = tx - ITYPE(k);
+		return k < 0 ?
+			eval(y, tx, 0, n)
+		: k < n-1 ?
+			eval(y, t, k, n)
+		:
+			eval(y, tx-ITYPE(n-2), n-2, n);
+	}
 };
 
 }
