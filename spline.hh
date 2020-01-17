@@ -6,6 +6,8 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
+#include <algorithm>
+
 namespace DSP {
 
 template <int KNOTS, typename OTYPE, typename ITYPE>
@@ -91,6 +93,16 @@ struct CubicHermiteSpline
 			h00(t) * Y[k] + h10(t) * (X[k+1]-X[k]) * central(X+k, Y+k) + h01(t) * Y[k+1] + h11(t) * (X[k+1]-X[k]) * central(X+k+1, Y+k+1)
 		:
 			h00(t) * Y[n-2] + h10(t) * (X[n-1]-X[n-2]) * central(X+n-2, Y+n-2) + h01(t) * Y[n-1] + h11(t) * (X[n-1]-X[n-2]) * left(X+n-1, Y+n-1);
+	}
+	static OTYPE eval(const ITYPE *X, const OTYPE *Y, ITYPE x, int n)
+	{
+		int k = std::lower_bound(X, X+n, x) - X;
+		return k < 1 ?
+			eval(X, Y, (x - X[0]) / (X[1] - X[0]), 0, n)
+		: k < n ?
+			eval(X, Y, (x - X[k-1]) / (X[k] - X[k-1]), k-1, n)
+		:
+			eval(X, Y, (x - X[n-2]) / (X[n-1] - X[n-2]), n-2, n);
 	}
 	static constexpr OTYPE left(const OTYPE *Y)
 	{
