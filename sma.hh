@@ -17,6 +17,8 @@ class SMA1
 public:
 	SMA1() : hist_avg(0), hist_pos(0)
 	{
+		for (int i = 0; i < NUM; ++i)
+			hist_inp[i] = 0;
 	}
 	TYPE abs_dev()
 	{
@@ -46,6 +48,8 @@ class SMA2
 public:
 	SMA2() : hist_sum(0), hist_pos(0)
 	{
+		for (int i = 0; i < NUM; ++i)
+			hist_inp[i] = 0;
 	}
 	TYPE operator () (TYPE input)
 	{
