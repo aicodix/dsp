@@ -15,7 +15,7 @@ template <typename TYPE>
 class ReadWAV : public ReadPCM<TYPE>
 {
 	std::ifstream is;
-	int bits, bytes, rate_, channels_, frames_;
+	int bits_, bytes, rate_, channels_, frames_;
 	int offset, factor;
 	int readLE(int b)
 	{
@@ -61,10 +61,10 @@ public:
 		rate_ = readLE(4);
 		int ByteRate = readLE(4);
 		int BlockAlign = readLE(2);
-		bits = readLE(2);
-		if (bits != 8 && bits != 16 && bits != 24 && bits != 32)
+		bits_ = readLE(2);
+		if (bits_ != 8 && bits_ != 16 && bits_ != 24 && bits_ != 32)
 			return;
-		bytes = bits / 8;
+		bytes = bits_ / 8;
 		if (bytes * channels_ != BlockAlign)
 			return;
 		if (rate_ * bytes * channels_ != ByteRate)
@@ -78,7 +78,7 @@ public:
 			return;
 		frames_ = Subchunk2Size / (bytes * channels_);
 
-		switch (bits) {
+		switch (bits_) {
 			case 8:
 				offset = 128;
 				factor = 127;
@@ -126,6 +126,10 @@ public:
 	int rate()
 	{
 		return rate_;
+	}
+	int bits()
+	{
+		return bits_;
 	}
 };
 
