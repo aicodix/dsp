@@ -14,6 +14,7 @@ namespace DSP {
 template <typename TYPE, int TAPS>
 class CDC
 {
+	static_assert((TAPS-1) % 4 == 0, "TAPS-1 not divisible by four");
 	typedef TYPE complex_type;
 	typedef typename TYPE::value_type value_type;
 	value_type real[(TAPS-1)/4];
