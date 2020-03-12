@@ -60,6 +60,10 @@ Normalizers for [periodic](https://en.wikipedia.org/wiki/Periodic_function) sign
 
 Fs/4 [Complex down conversion](https://en.wikipedia.org/wiki/Digital_down_converter)
 
+### [hilbert.hh](hilbert.hh)
+
+[Discrete Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform#Discrete_Hilbert_transform)
+
 ### [fmd.hh](fmd.hh)
 
 [Frequency modulation](https://en.wikipedia.org/wiki/Frequency_modulation) [demodulation](https://en.wikipedia.org/wiki/Demodulation) with and without [atan2](https://en.wikipedia.org/wiki/Atan2).
