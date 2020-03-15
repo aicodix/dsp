@@ -30,6 +30,10 @@ public:
 	{
 		delta = complex_type(cos(v), sin(v));
 	}
+	void freq(value_type v)
+	{
+		omega(Const<value_type>::TwoPi() * v);
+	}
 	complex_type operator()()
 	{
 		complex_type tmp = prev;
