@@ -34,8 +34,8 @@ public:
 	template <typename IO>
 	void operator ()(IO *output, IO *input, TYPE diff, int samples, int stride = 1)
 	{
-		TYPE ratio = (rate + diff) / rate;
-		TYPE recip = rate / (rate + diff);
+		TYPE ratio = rate / (rate + diff);
+		TYPE recip = (rate + diff) / rate;
 		for (int i = 0; i < samples - TAPS; ++i) {
 			IO sum = 0;
 			int s0 = nearbyint(i * ratio);
