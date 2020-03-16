@@ -126,5 +126,11 @@ static constexpr T arg(Complex<T> a)
 	return atan2(a.imag(), a.real());
 }
 
+template <typename T>
+static constexpr Complex<T> polar(T a, T b)
+{
+	return Complex<T>(a * cos(b), a * sin(b));
+}
+
 }
 
