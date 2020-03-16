@@ -30,6 +30,10 @@ public:
 		reco = win((TAPS-1)/2, TAPS) * hbf((TAPS-1)/2, TAPS);
 		for (int i = 0; i < (TAPS-1)/4; ++i)
 			imco[i] = win(2*i+(TAPS-1)/2+1, TAPS) * hbf(2*i+(TAPS-1)/2+1, TAPS);
+		for (int i = 0; i < (TAPS-1)/4; ++i)
+			real[i] = 0;
+		for (int i = 0; i < (TAPS-1)/2; ++i)
+			imag[i] = 0;
 	}
 	complex_type operator()(value_type in0, value_type in1)
 	{

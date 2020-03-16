@@ -26,6 +26,8 @@ public:
 		reco = win((TAPS-1)/2, TAPS);
 		for (int i = 0; i < (TAPS-1)/4; ++i)
 			imco[i] = win((2*i+1)+(TAPS-1)/2, TAPS) * 2 / ((2*i+1) * Const<value_type>::Pi());
+		for (int i = 0; i < TAPS; ++i)
+			real[i] = 0;
 	}
 	complex_type operator()(value_type input)
 	{
