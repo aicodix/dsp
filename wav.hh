@@ -99,8 +99,10 @@ public:
 				return;
 		}
 	}
-	void read(TYPE *buf, int num, int stride = 1)
+	void read(TYPE *buf, int num, int stride = -1)
 	{
+		if (stride < 0)
+			stride = channels_;
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
 				buf[stride * n + c] = TYPE(readLE(bytes) - offset) / TYPE(factor);
@@ -204,8 +206,10 @@ public:
 		os.seekp(40);
 		writeLE(size, 4); // Subchunk2Size
 	}
-	void write(TYPE *buf, int num, int stride = 1)
+	void write(TYPE *buf, int num, int stride = -1)
 	{
+		if (stride < 0)
+			stride = channels_;
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
 				TYPE v = TYPE(offset) + TYPE(factor) * buf[stride * n + c];
