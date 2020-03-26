@@ -8,7 +8,7 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 
 namespace DSP {
 
-template <typename TYPE, int NUM>
+template <typename TYPE, typename VALUE, int NUM>
 class SMA1
 {
 	TYPE hist_inp[NUM];
@@ -20,12 +20,12 @@ public:
 		for (int i = 0; i < NUM; ++i)
 			hist_inp[i] = 0;
 	}
-	TYPE abs_dev()
+	VALUE abs_dev()
 	{
-		TYPE sum(abs(hist_inp[0] - hist_avg));
+		VALUE sum(abs(hist_inp[0] - hist_avg));
 		for (int i = 1; i < NUM; ++i)
 			sum += abs(hist_inp[i] - hist_avg);
-		return sum / NUM;
+		return sum / VALUE(NUM);
 	}
 	TYPE operator () (TYPE input)
 	{
@@ -35,11 +35,11 @@ public:
 		TYPE hist_sum(hist_inp[0]);
 		for (int i = 1; i < NUM; ++i)
 			hist_sum += hist_inp[i];
-		return hist_avg = hist_sum / NUM;
+		return hist_avg = hist_sum / VALUE(NUM);
 	}
 };
 
-template <typename TYPE, int NUM>
+template <typename TYPE, typename VALUE, int NUM>
 class SMA2
 {
 	TYPE hist_inp[NUM];
@@ -57,7 +57,7 @@ public:
 		hist_inp[hist_pos] = input;
 		if (++hist_pos >= NUM)
 			hist_pos = 0;
-		return hist_sum / NUM;
+		return hist_sum / VALUE(NUM);
 	}
 };
 
