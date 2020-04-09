@@ -6,6 +6,8 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
+#include "kahan.hh"
+
 namespace DSP {
 
 template <typename TYPE, typename VALUE, int NUM>
@@ -58,6 +60,50 @@ public:
 		if (++hist_pos >= NUM)
 			hist_pos = 0;
 		return hist_sum / VALUE(NUM);
+	}
+};
+
+template <typename TYPE, typename VALUE, int NUM>
+class SMA3
+{
+	TYPE hist_inp[NUM];
+	Kahan<TYPE> hist_sum;
+	int hist_pos;
+public:
+	SMA3() : hist_sum(0), hist_pos(0)
+	{
+		for (int i = 0; i < NUM; ++i)
+			hist_inp[i] = 0;
+	}
+	TYPE operator () (TYPE input)
+	{
+		hist_sum(-hist_inp[hist_pos]);
+		hist_inp[hist_pos] = input;
+		if (++hist_pos >= NUM)
+			hist_pos = 0;
+		return hist_sum(input) / VALUE(NUM);
+	}
+};
+
+template <typename TYPE, typename VALUE, int NUM>
+class SMA4
+{
+	TYPE tree[2 * NUM];
+	int leaf;
+public:
+	SMA4() : leaf(NUM)
+	{
+		for (int i = 0; i < 2 * NUM; ++i)
+			tree[i] = 0;
+	}
+	TYPE operator () (TYPE input)
+	{
+		tree[leaf] = input;
+		for (int child = leaf, parent = leaf / 2; parent; child = parent, parent /= 2)
+			tree[parent] = tree[child] + tree[child^1];
+		if (++leaf >= 2 * NUM)
+			leaf = NUM;
+		return tree[1] / VALUE(NUM);
 	}
 };
 

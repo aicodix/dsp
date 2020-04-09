@@ -99,6 +99,11 @@ Implemented are the following [trigger functions](https://en.wikipedia.org/wiki/
 
 The [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_moving_average) gives us the mean of the last N data points.
 
+* SMA1 computes the sum of its internal history buffer at each new input from scratch is and therefore very slow.
+* SMA2 updates its internal sum using only the new input and the oldest value in the history buffer. It is therefore the fastest of all and works perfect with integers but suffers from drift when used with floats on sequences having a high dynamic range.
+* SMA3 is based on SMA2 but uses the [Kahan summation algorithm](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) to reduce drift significantly.
+* SMA4 uses a tree and only update nodes that depend on the new input value and is slower than SMA3 but it has no drift.
+
 ### [calculus.hh](calculus.hh)
 
 Some [calculus](https://en.wikipedia.org/wiki/Calculus) functions:
