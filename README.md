@@ -104,6 +104,25 @@ The [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_
 * SMA3 is based on SMA2 but uses the [Kahan summation algorithm](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) to reduce drift significantly.
 * SMA4 uses a tree and only update nodes that depend on the new input value and is slower than SMA3 but it has no drift.
 
+### [bip_buffer.hh](bip_buffer.hh)
+
+The [Bip buffer](https://en.wikipedia.org/wiki/Circular_buffer#Fixed-length-element_and_contiguous-block_circular_buffer) provides contiguous block access to the last N value stored in a circular buffer.
+
+Example:
+```
+DSP::BipBuffer<TYPE, NUM> history;
+*snip*
+const TYPE *buf = history(new_value);
+*snip*
+TYPE newest_value = buf[NUM-1];
+TYPE previous_value = buf[NUM-2];
+TYPE oldest_value = buf[0];
+*snip*
+DSP::FastFourierTransform<NUM, TYPE, -1> fwd;
+TYPE out[NUM];
+fwd(out, history(another_value));
+```
+
 ### [calculus.hh](calculus.hh)
 
 Some [calculus](https://en.wikipedia.org/wiki/Calculus) functions:
