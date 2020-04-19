@@ -123,6 +123,10 @@ TYPE out[NUM];
 fwd(out, history(another_value));
 ```
 
+### [delay.hh](delay.hh)
+
+A [Digital delay line](https://en.wikipedia.org/wiki/Digital_delay_line) can be used to align signals with different delays - after filtering, for example.
+
 ### [calculus.hh](calculus.hh)
 
 Some [calculus](https://en.wikipedia.org/wiki/Calculus) functions:
