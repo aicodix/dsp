@@ -11,19 +11,22 @@ namespace DSP {
 template <typename TYPE>
 class SchmittTrigger
 {
-	TYPE threshold;
+	TYPE low, high;
 	bool previous;
 public:
-	constexpr SchmittTrigger(TYPE threshold = TYPE(1)/TYPE(3), bool previous = false) : threshold(threshold), previous(previous)
+	constexpr SchmittTrigger(TYPE threshold = TYPE(1)/TYPE(3), bool previous = false) : low(-threshold), high(threshold), previous(previous)
+	{
+	}
+	constexpr SchmittTrigger(TYPE low, TYPE high, bool previous = false) : low(low), high(high), previous(previous)
 	{
 	}
 	bool operator() (TYPE input)
 	{
 		if (previous) {
-			if (input < -threshold)
+			if (input < low)
 				previous = false;
 		} else {
-			if (input > threshold)
+			if (input > high)
 				previous = true;
 		}
 		return previous;
