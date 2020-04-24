@@ -41,7 +41,7 @@ public:
 	}
 };
 
-template <typename TYPE, typename VALUE, int NUM>
+template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA2
 {
 	TYPE hist_inp[NUM];
@@ -59,11 +59,13 @@ public:
 		hist_inp[hist_pos] = input;
 		if (++hist_pos >= NUM)
 			hist_pos = 0;
-		return hist_sum / VALUE(NUM);
+		if (NORM)
+			return hist_sum / VALUE(NUM);
+		return hist_sum;
 	}
 };
 
-template <typename TYPE, typename VALUE, int NUM>
+template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA3
 {
 	TYPE hist_inp[NUM];
@@ -81,11 +83,13 @@ public:
 		hist_inp[hist_pos] = input;
 		if (++hist_pos >= NUM)
 			hist_pos = 0;
-		return hist_sum(input) / VALUE(NUM);
+		if (NORM)
+			return hist_sum(input) / VALUE(NUM);
+		return hist_sum(input);
 	}
 };
 
-template <typename TYPE, typename VALUE, int NUM>
+template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA4
 {
 	TYPE tree[2 * NUM];
@@ -103,7 +107,9 @@ public:
 			tree[parent] = tree[child] + tree[child^1];
 		if (++leaf >= 2 * NUM)
 			leaf = NUM;
-		return tree[1] / VALUE(NUM);
+		if (NORM)
+			return tree[1] / VALUE(NUM);
+		return tree[1];
 	}
 };
 
