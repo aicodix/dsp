@@ -32,7 +32,7 @@ public:
 		lpf = spline_type(tmp, 0, 1.0 / OVER);
 	}
 	template <typename IO>
-	void operator ()(IO *output, IO *input, TYPE diff, int samples, int stride = 1)
+	void operator ()(IO *output, const IO *input, TYPE diff, int samples, int stride = 1)
 	{
 		TYPE ratio = rate / (rate + diff);
 		TYPE recip = (rate + diff) / rate;
@@ -71,7 +71,7 @@ public:
 		for (int i = 0; i < TAPS; ++i)
 			buf[i] = 0;
 	}
-	int operator ()(IO *output, IO input, TYPE diff)
+	int operator ()(IO *output, const IO input, TYPE diff)
 	{
 		for (int i = 0; i < TAPS-1; ++i)
 			buf[i] = buf[i+1];
