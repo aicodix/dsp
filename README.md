@@ -146,6 +146,14 @@ Interface for reading and writing [PCM](https://en.wikipedia.org/wiki/Pulse-code
 
 Read and write [WAV](https://en.wikipedia.org/wiki/WAV) files
 
+### [pel.hh](pel.hh)
+
+Interface for reading and writing [pixel](https://en.wikipedia.org/wiki/Pixel) data
+
+### [netpbm.hh](netpbm.hh)
+
+Read and write [Netpbm](https://en.wikipedia.org/wiki/Netpbm) files
+
 ### [spline.hh](spline.hh)
 
 * Algorithm for computing uniform and [natural cubic splines](https://en.wikipedia.org/wiki/Spline_(mathematics)#Algorithm_for_computing_natural_cubic_splines)
