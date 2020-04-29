@@ -206,7 +206,7 @@ public:
 		os.seekp(40);
 		writeLE(size, 4); // Subchunk2Size
 	}
-	void write(TYPE *buf, int num, int stride = -1)
+	void write(const TYPE *buf, int num, int stride = -1)
 	{
 		if (stride < 0)
 			stride = channels_;
