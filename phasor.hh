@@ -34,6 +34,10 @@ public:
 	{
 		omega(Const<value_type>::TwoPi() * v);
 	}
+	void reset()
+	{
+		prev = complex_type(1, 0);
+	}
 	complex_type operator()()
 	{
 		complex_type tmp = prev;
