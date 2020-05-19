@@ -35,7 +35,7 @@ public:
 	void operator ()(IO *output, const IO *input, TYPE diff, int samples, int stride = 1)
 	{
 		TYPE ratio = rate / (rate + diff);
-		TYPE recip = (rate + diff) / rate;
+		TYPE recip = TYPE(1) / ratio;
 		for (int i = 0; i < samples - TAPS; ++i) {
 			IO sum = 0;
 			int s0 = nearbyint(i * ratio);
