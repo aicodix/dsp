@@ -34,10 +34,10 @@ public:
 	template <typename IO>
 	void operator ()(IO *output, const IO *input, TYPE diff, int samples, int stride = 1)
 	{
-		TYPE ratio = rate / (rate + diff);
+		double ratio = rate / (rate + diff);
 		for (int i = 0; i < samples - TAPS; ++i) {
 			IO sum = 0;
-			TYPE x = i * ratio;
+			double x = i * ratio;
 			int s0 = nearbyint(x);
 			int s1 = s0 + TAPS;
 			for (int s = s0; s < s1; ++s) {
