@@ -102,7 +102,11 @@ The [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_
 * SMA1 computes the sum of its internal history buffer at each new input from scratch is and therefore very slow.
 * SMA2 updates its internal sum using only the new input and the oldest value in the history buffer. It is therefore the fastest of all and works perfect with integers but suffers from drift when used with floats on sequences having a high dynamic range.
 * SMA3 is based on SMA2 but uses the [Kahan summation algorithm](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) to reduce drift significantly.
-* SMA4 uses a tree and only update nodes that depend on the new input value and is slower than SMA3 but it has no drift.
+* SMA4 uses a tree and only updates nodes that depend on the new input value and is slower than SMA3 but it has no drift.
+
+### [swa.hh](swa.hh)
+
+The sliding window accelerator uses a tree and only updates nodes that depend on the new input value for the pairwise reduction.
 
 ### [bip_buffer.hh](bip_buffer.hh)
 

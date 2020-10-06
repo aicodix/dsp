@@ -7,6 +7,7 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 #pragma once
 
 #include "kahan.hh"
+#include "swa.hh"
 
 namespace DSP {
 
@@ -92,24 +93,14 @@ public:
 template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA4
 {
-	TYPE tree[2 * NUM];
-	int leaf;
+	struct Add { TYPE operator () (TYPE a, TYPE b) { return a + b; } };
+	SWA<TYPE, Add, NUM> swa;
 public:
-	SMA4() : leaf(NUM)
-	{
-		for (int i = 0; i < 2 * NUM; ++i)
-			tree[i] = 0;
-	}
 	TYPE operator () (TYPE input)
 	{
-		tree[leaf] = input;
-		for (int child = leaf, parent = leaf / 2; parent; child = parent, parent /= 2)
-			tree[parent] = tree[child] + tree[child^1];
-		if (++leaf >= 2 * NUM)
-			leaf = NUM;
 		if (NORM)
-			return tree[1] / VALUE(NUM);
-		return tree[1];
+			return swa(input) / VALUE(NUM);
+		return swa(input);
 	}
 };
 
