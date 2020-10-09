@@ -7,6 +7,7 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 #pragma once
 
 #include "kahan.hh"
+#include "delay.hh"
 #include "swa.hh"
 
 namespace DSP {
@@ -45,48 +46,36 @@ public:
 template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA2
 {
-	TYPE hist_inp[NUM];
-	TYPE hist_sum;
-	int hist_pos;
+	Delay<TYPE, NUM> delay;
+	TYPE sum;
 public:
-	SMA2() : hist_sum(0), hist_pos(0)
+	SMA2() : sum(0)
 	{
-		for (int i = 0; i < NUM; ++i)
-			hist_inp[i] = 0;
 	}
 	TYPE operator () (TYPE input)
 	{
-		hist_sum += input - hist_inp[hist_pos];
-		hist_inp[hist_pos] = input;
-		if (++hist_pos >= NUM)
-			hist_pos = 0;
+		sum += input - delay(input);
 		if (NORM)
-			return hist_sum / VALUE(NUM);
-		return hist_sum;
+			return sum / VALUE(NUM);
+		return sum;
 	}
 };
 
 template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA3
 {
-	TYPE hist_inp[NUM];
-	Kahan<TYPE> hist_sum;
-	int hist_pos;
+	Delay<TYPE, NUM> delay;
+	Kahan<TYPE> sum;
 public:
-	SMA3() : hist_sum(0), hist_pos(0)
+	SMA3() : sum(0)
 	{
-		for (int i = 0; i < NUM; ++i)
-			hist_inp[i] = 0;
 	}
 	TYPE operator () (TYPE input)
 	{
-		hist_sum(-hist_inp[hist_pos]);
-		hist_inp[hist_pos] = input;
-		if (++hist_pos >= NUM)
-			hist_pos = 0;
+		sum(-delay(input));
 		if (NORM)
-			return hist_sum(input) / VALUE(NUM);
-		return hist_sum(input);
+			return sum(input) / VALUE(NUM);
+		return sum(input);
 	}
 };
 
