@@ -85,6 +85,9 @@ class SMA4
 	struct Add { TYPE operator () (TYPE a, TYPE b) { return a + b; } };
 	SWA<TYPE, Add, NUM> swa;
 public:
+	SMA4() : swa(0)
+	{
+	}
 	TYPE operator () (TYPE input)
 	{
 		if (NORM)

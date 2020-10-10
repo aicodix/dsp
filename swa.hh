@@ -15,10 +15,10 @@ class SWA
 	int leaf;
 	OP op;
 public:
-	SWA() : leaf(NUM)
+	SWA(TYPE ident) : leaf(NUM)
 	{
 		for (int i = 0; i < 2 * NUM; ++i)
-			tree[i] = 0;
+			tree[i] = ident;
 	}
 	TYPE operator () (TYPE input)
 	{
