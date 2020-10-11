@@ -19,6 +19,12 @@ public:
 	Deque() : head(SIZE-1), tail(0), count(0)
 	{
 	}
+	void clear()
+	{
+		head = SIZE-1;
+		tail = 0;
+		count = 0;
+	}
 	void push_back(TYPE input)
 	{
 		assert(count < SIZE);
