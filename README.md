@@ -108,6 +108,13 @@ The [simple moving average](https://en.wikipedia.org/wiki/Moving_average#Simple_
 
 The sliding window accelerator uses a tree and only updates nodes that depend on the new input value for the pairwise reduction.
 
+### [movext.hh](movext.hh)
+
+[Amortized](https://en.wikipedia.org/wiki/Amortized_analysis) [O(1)](https://en.wikipedia.org/wiki/Computational_complexity_theory) moving [extrema](https://en.wikipedia.org/wiki/Maxima_and_minima) implementations of:
+
+* Moving Minimum
+* Moving Maximum
+
 ### [bip_buffer.hh](bip_buffer.hh)
 
 The [Bip buffer](https://en.wikipedia.org/wiki/Circular_buffer#Fixed-length-element_and_contiguous-block_circular_buffer) provides contiguous block access to the last N value stored in a circular buffer.
