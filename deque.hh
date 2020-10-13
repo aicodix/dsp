@@ -6,8 +6,6 @@ Copyright 2020 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
-#include <cassert>
-
 namespace DSP {
 
 template <typename TYPE, int SIZE>

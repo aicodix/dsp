@@ -6,8 +6,6 @@ Copyright 2018 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
-#include <algorithm>
-
 namespace DSP {
 
 template <int KNOTS, typename OTYPE, typename ITYPE>
