@@ -14,10 +14,10 @@ class Delay
 	TYPE buf[NUM];
 	int pos;
 public:
-	Delay() : pos(0)
+	Delay(TYPE init = 0) : pos(0)
 	{
 		for (int i = 0; i < NUM; ++i)
-			buf[i] = 0;
+			buf[i] = init;
 	}
 	TYPE operator () (TYPE input)
 	{
