@@ -82,8 +82,7 @@ public:
 template <typename TYPE, typename VALUE, int NUM, bool NORM = true>
 class SMA4
 {
-	struct Add { TYPE operator () (TYPE a, TYPE b) { return a + b; } };
-	SWA<TYPE, Add, NUM> swa;
+	SWA<TYPE, std::plus<TYPE>, NUM> swa;
 public:
 	SMA4() : swa(0)
 	{

@@ -44,9 +44,7 @@ public:
 template <typename TYPE, int NUM>
 class MovMin
 {
-	struct Equal { bool operator () (TYPE a, TYPE b) { return a == b; } };
-	struct Less { bool operator () (TYPE a, TYPE b) { return a < b; } };
-	MovExt<TYPE, Equal, Less, NUM> movmin;
+	MovExt<TYPE, std::equal_to<TYPE>, std::less<TYPE>, NUM> movmin;
 public:
 	TYPE operator () (TYPE input)
 	{
@@ -57,9 +55,7 @@ public:
 template <typename TYPE, int NUM>
 class MovMax
 {
-	struct Equal { bool operator () (TYPE a, TYPE b) { return a == b; } };
-	struct Greater { bool operator () (TYPE a, TYPE b) { return a > b; } };
-	MovExt<TYPE, Equal, Greater, NUM> movmax;
+	MovExt<TYPE, std::equal_to<TYPE>, std::greater<TYPE>, NUM> movmax;
 public:
 	TYPE operator () (TYPE input)
 	{
