@@ -142,6 +142,10 @@ A [Digital delay line](https://en.wikipedia.org/wiki/Digital_delay_line) can be 
 
 A [ring buffer](https://en.wikipedia.org/wiki/Circular_buffer) based, fixed-size [double-ended queue](https://en.wikipedia.org/wiki/Double-ended_queue).
 
+### [stack.hh](stack.hh)
+
+A fixed-size [stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)) with access to the first element.
+
 ### [calculus.hh](calculus.hh)
 
 Some [calculus](https://en.wikipedia.org/wiki/Calculus) functions:
