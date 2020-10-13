@@ -10,21 +10,23 @@ Copyright 2020 Ahmet Inan <inan@aicodix.de>
 
 namespace DSP {
 
-template <typename TYPE, int NUM>
-class MovMin
+template <typename TYPE, typename EQUAL, typename COMP, int NUM>
+class MovExt
 {
 	Deque<TYPE, NUM> window, dispenser, refill;
+	EQUAL equal;
+	COMP comp;
 public:
 	TYPE operator () (TYPE input)
 	{
 		if (window.full()) {
-			if (window.front() == dispenser.front())
+			if (equal(window.front(), dispenser.front()))
 				dispenser.pop_front();
 			window.pop_front();
 		}
 		window.push_back(input);
 
-		while (!refill.empty() && input < refill.front())
+		while (!refill.empty() && comp(input, refill.front()))
 			refill.pop_front();
 		refill.push_front(input);
 
@@ -35,36 +37,33 @@ public:
 			}
 			return dispenser.front();
 		}
-		return dispenser.front() < refill.back() ? dispenser.front() : refill.back();
+		return comp(dispenser.front(), refill.back()) ? dispenser.front() : refill.back();
+	}
+};
+
+template <typename TYPE, int NUM>
+class MovMin
+{
+	struct Equal { bool operator () (TYPE a, TYPE b) { return a == b; } };
+	struct Less { bool operator () (TYPE a, TYPE b) { return a < b; } };
+	MovExt<TYPE, Equal, Less, NUM> movmin;
+public:
+	TYPE operator () (TYPE input)
+	{
+		return movmin(input);
 	}
 };
 
 template <typename TYPE, int NUM>
 class MovMax
 {
-	Deque<TYPE, NUM> window, dispenser, refill;
+	struct Equal { bool operator () (TYPE a, TYPE b) { return a == b; } };
+	struct Greater { bool operator () (TYPE a, TYPE b) { return a > b; } };
+	MovExt<TYPE, Equal, Greater, NUM> movmax;
 public:
 	TYPE operator () (TYPE input)
 	{
-		if (window.full()) {
-			if (window.front() == dispenser.front())
-				dispenser.pop_front();
-			window.pop_front();
-		}
-		window.push_back(input);
-
-		while (!refill.empty() && input > refill.front())
-			refill.pop_front();
-		refill.push_front(input);
-
-		if (dispenser.empty()) {
-			while (!refill.empty()) {
-				dispenser.push_front(refill.front());
-				refill.pop_front();
-			}
-			return dispenser.front();
-		}
-		return dispenser.front() > refill.back() ? dispenser.front() : refill.back();
+		return movmax(input);
 	}
 };
 
