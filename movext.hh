@@ -15,31 +15,32 @@ namespace DSP {
 template <typename TYPE, typename EQUAL, typename COMP, int NUM>
 class MovExt
 {
-	Deque<TYPE, NUM> window, dispenser, refill;
+	Deque<TYPE, NUM> window;
+	Stack<TYPE, NUM> dispenser, refill;
 	EQUAL equal;
 	COMP comp;
 public:
 	TYPE operator () (TYPE input)
 	{
 		if (window.full()) {
-			if (equal(window.front(), dispenser.front()))
-				dispenser.pop_front();
+			if (equal(window.front(), dispenser.top()))
+				dispenser.pop();
 			window.pop_front();
 		}
 		window.push_back(input);
 
-		while (!refill.empty() && comp(input, refill.front()))
-			refill.pop_front();
-		refill.push_front(input);
+		while (!refill.empty() && comp(input, refill.top()))
+			refill.pop();
+		refill.push(input);
 
 		if (dispenser.empty()) {
 			while (!refill.empty()) {
-				dispenser.push_front(refill.front());
-				refill.pop_front();
+				dispenser.push(refill.top());
+				refill.pop();
 			}
-			return dispenser.front();
+			return dispenser.top();
 		}
-		return comp(dispenser.front(), refill.back()) ? dispenser.front() : refill.back();
+		return comp(dispenser.top(), refill.first()) ? dispenser.top() : refill.first();
 	}
 };
 
