@@ -7,7 +7,6 @@ Copyright 2020 Ahmet Inan <inan@aicodix.de>
 #pragma once
 
 #include "delay.hh"
-#include "deque.hh"
 #include "stack.hh"
 
 namespace DSP {
@@ -15,19 +14,19 @@ namespace DSP {
 template <typename TYPE, typename EQUAL, typename COMP, int NUM>
 class MovExt
 {
-	Deque<TYPE, NUM> window;
+	Delay<TYPE, NUM> window;
 	Stack<TYPE, NUM> dispenser, refill;
 	EQUAL equal;
 	COMP comp;
 public:
+	MovExt(TYPE init) : window(init)
+	{
+		dispenser.push(init);
+	}
 	TYPE operator () (TYPE input)
 	{
-		if (window.full()) {
-			if (equal(window.front(), dispenser.top()))
-				dispenser.pop();
-			window.pop_front();
-		}
-		window.push_back(input);
+		if (window(input) == dispenser.top())
+			dispenser.pop();
 
 		while (!refill.empty() && comp(input, refill.top()))
 			refill.pop();
@@ -47,60 +46,28 @@ public:
 template <typename TYPE, int NUM>
 class MovMin
 {
-	Delay<TYPE, NUM> window;
-	Stack<TYPE, NUM> dispenser, refill;
+	MovExt<TYPE, std::equal_to<TYPE>, std::less<TYPE>, NUM> movmin;
 public:
-	MovMin() : window(std::numeric_limits<TYPE>::max())
+	MovMin() : movmin(std::numeric_limits<TYPE>::max())
 	{
-		dispenser.push(std::numeric_limits<TYPE>::max());
 	}
 	TYPE operator () (TYPE input)
 	{
-		if (window(input) == dispenser.top())
-			dispenser.pop();
-
-		while (!refill.empty() && input < refill.top())
-			refill.pop();
-		refill.push(input);
-
-		if (dispenser.empty()) {
-			while (!refill.empty()) {
-				dispenser.push(refill.top());
-				refill.pop();
-			}
-			return dispenser.top();
-		}
-		return dispenser.top() < refill.first() ? dispenser.top() : refill.first();
+		return movmin(input);
 	}
 };
 
 template <typename TYPE, int NUM>
 class MovMax
 {
-	Delay<TYPE, NUM> window;
-	Stack<TYPE, NUM> dispenser, refill;
+	MovExt<TYPE, std::equal_to<TYPE>, std::greater<TYPE>, NUM> movmax;
 public:
-	MovMax() : window(std::numeric_limits<TYPE>::min())
+	MovMax() : movmax(std::numeric_limits<TYPE>::min())
 	{
-		dispenser.push(std::numeric_limits<TYPE>::min());
 	}
 	TYPE operator () (TYPE input)
 	{
-		if (window(input) == dispenser.top())
-			dispenser.pop();
-
-		while (!refill.empty() && input > refill.top())
-			refill.pop();
-		refill.push(input);
-
-		if (dispenser.empty()) {
-			while (!refill.empty()) {
-				dispenser.push(refill.top());
-				refill.pop();
-			}
-			return dispenser.top();
-		}
-		return dispenser.top() > refill.first() ? dispenser.top() : refill.first();
+		return movmax(input);
 	}
 };
 
