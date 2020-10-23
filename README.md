@@ -219,3 +219,9 @@ Sometimes we only need [trigonometric functions](https://en.wikipedia.org/wiki/T
 * [sine function](https://en.wikipedia.org/wiki/Sine)
 * [cosine function](https://en.wikipedia.org/wiki/Trigonometric_functions#cosine)
 
+### [lms.hh](lms.hh)
+
+Some [least mean squares filter](https://en.wikipedia.org/wiki/Least_mean_squares_filter) implementations:
+* Normalized Least Mean Squares
+* Normalized Complex Least Mean Squares
+
