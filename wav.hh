@@ -74,7 +74,7 @@ public:
 		if (cmp4("data", Subchunk2ID))
 			return;
 		int Subchunk2Size = readLE(4);
-		if (36 + Subchunk2Size != ChunkSize)
+		if (36 + Subchunk2Size > ChunkSize)
 			return;
 		frames_ = Subchunk2Size / (bytes * channels_);
 
