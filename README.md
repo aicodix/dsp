@@ -183,6 +183,10 @@ Very useful for data interpolation.
 
 Implemented [Simple linear regression](https://en.wikipedia.org/wiki/Simple_linear_regression) for [Regression analysis](https://en.wikipedia.org/wiki/Regression_analysis) of data.
 
+### [theil_sen.hh](theil_sen.hh)
+
+The [Theil-Sen estimator](https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator) is a [robust](https://en.wikipedia.org/wiki/Robust_statistics) [line fitting](https://en.wikipedia.org/wiki/Line_fitting) algorithm.
+
 ### [complex.hh](complex.hh)
 
 Faster alternative (no Inf/NaN handling) to the std::complex implementation.
