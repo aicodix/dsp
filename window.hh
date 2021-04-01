@@ -74,7 +74,7 @@ public:
 	Gauss(TYPE o) : o(o) {}
 	TYPE operator () (int n, int N)
 	{
-		return exp(- TYPE(0.5) * pow((TYPE(n) - TYPE(N - 0) / TYPE(2)) / (o * TYPE(N - 1) / TYPE(2)), TYPE(2)));
+		return exp(- TYPE(0.5) * pow((TYPE(n) - TYPE(N - 1) / TYPE(2)) / (o * TYPE(N - 1) / TYPE(2)), TYPE(2)));
 	}
 };
 
