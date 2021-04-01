@@ -16,13 +16,13 @@ namespace DSP {
 template <typename TYPE>
 struct Rect
 {
-	TYPE operator () (int n, int N) { return n >= 0 && n < N ? 1 : 0; }
+	TYPE operator () (int n, int N) const { return n >= 0 && n < N ? 1 : 0; }
 };
 
 template <typename TYPE>
 struct Hann
 {
-	TYPE operator () (int n, int N)
+	TYPE operator () (int n, int N) const
 	{
 		return TYPE(0.5) * (TYPE(1) - UnitCircle<TYPE>::cos(n, N - 1));
 	}
@@ -31,7 +31,7 @@ struct Hann
 template <typename TYPE>
 struct Hamming
 {
-	TYPE operator () (int n, int N)
+	TYPE operator () (int n, int N) const
 	{
 		return TYPE(0.54) - TYPE(0.46) * UnitCircle<TYPE>::cos(n, N - 1);
 	}
@@ -40,7 +40,7 @@ struct Hamming
 template <typename TYPE>
 struct Lanczos
 {
-	TYPE operator () (int n, int N)
+	TYPE operator () (int n, int N) const
 	{
 #if 0
 		return sinc(TYPE(2 * n) / TYPE(N - 1) - TYPE(1));
@@ -60,7 +60,7 @@ public:
 	Blackman(TYPE a) : Blackman((TYPE(1) - a) / TYPE(2), TYPE(0.5), a / TYPE(2)) {}
 	// "exact Blackman"
 	Blackman() : Blackman(TYPE(7938) / TYPE(18608), TYPE(9240) / TYPE(18608), TYPE(1430) / TYPE(18608)) {}
-	TYPE operator () (int n, int N)
+	TYPE operator () (int n, int N) const
 	{
 		return a0 - a1 * UnitCircle<TYPE>::cos(n, N-1) + a2 * UnitCircle<TYPE>::cos((2*n)%(N-1), N-1);
 	}
@@ -72,7 +72,7 @@ class Gauss
 	TYPE o;
 public:
 	Gauss(TYPE o) : o(o) {}
-	TYPE operator () (int n, int N)
+	TYPE operator () (int n, int N) const
 	{
 		return exp(- TYPE(0.5) * pow((TYPE(n) - TYPE(N - 1) / TYPE(2)) / (o * TYPE(N - 1) / TYPE(2)), TYPE(2)));
 	}
@@ -110,7 +110,7 @@ class Kaiser
 	}
 public:
 	Kaiser(TYPE a) : a(a) {}
-	TYPE operator () (int n, int N)
+	TYPE operator () (int n, int N) const
 	{
 		return i0(Const<TYPE>::Pi() * a * sqrt(TYPE(1) - sqr(TYPE(2 * n) / TYPE(N - 1) - TYPE(1)))) / i0(Const<TYPE>::Pi() * a);
 	}
