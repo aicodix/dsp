@@ -40,6 +40,8 @@ public:
 			double x = i * ratio;
 			int s0 = nearbyint(x);
 			int s1 = s0 + TAPS;
+			if (s0 < 0 || s1 > samples)
+				continue;
 			for (int s = s0; s < s1; ++s) {
 				TYPE k = s - x;
 				sum += lpf(k) * input[s * stride];
