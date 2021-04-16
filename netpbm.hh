@@ -20,7 +20,7 @@ class ReadPNM : public ReadPEL<TYPE>
 
 	TYPE linear(int val)
 	{
-		int K0 = std::nearbyint(0.03928 * maxval_);
+		int K0 = std::nearbyint(0.04045 * maxval_);
 		TYPE phi(12.92 * maxval_), a(0.055 * maxval_), gamma(2.4);
 		return val <= K0 ? val / phi : std::pow((val + a) / (maxval_ + a), gamma);
 	}
@@ -123,7 +123,7 @@ class WritePNM : public WritePEL<TYPE>
 
 	int srgb(TYPE val)
 	{
-		TYPE K0(0.03928), a(0.055), phi(12.92), gamma(2.4);
+		TYPE K0(0.04045), a(0.055), phi(12.92), gamma(2.4);
 		val = std::min(std::max(val, TYPE(0)), TYPE(1));
 		val = val <= K0 / phi ? val * phi : (1 + a) * std::pow(val, 1 / gamma) - a;
 		return std::nearbyint(maxval_ * val);
