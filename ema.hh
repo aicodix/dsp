@@ -35,7 +35,7 @@ public:
 	}
 	TYPE operator()(TYPE input)
 	{
-		return prev = lerp(alpha, prev, input);
+		return prev = lerp(prev, input, alpha);
 	}
 };
 
@@ -83,7 +83,7 @@ public:
 	TYPE operator()(TYPE input)
 	{
 		for (int i = 0; i < ORDER; ++i)
-			prev[i] = input = lerp(alpha, prev[i], input);
+			prev[i] = input = lerp(prev[i], input, alpha);
 		return input;
 	}
 };

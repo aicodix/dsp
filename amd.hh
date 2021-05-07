@@ -32,7 +32,7 @@ public:
 	value_type operator()(complex_type input)
 	{
 		value_type amp = abs(input);
-		avg = lerp(amp < avg ? dec : att, avg, amp);
+		avg = lerp(avg, amp, amp < avg ? dec : att);
 		avg = min(max(avg, lo), hi);
 		amp /= avg;
 		return (amp * (value_type(1)+idx) - value_type(1)) / idx;
