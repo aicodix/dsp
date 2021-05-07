@@ -23,6 +23,12 @@ AB lerp(AB a, AB b, X x)
 }
 
 template <typename TYPE>
+TYPE clamp(TYPE x, TYPE a, TYPE b)
+{
+	return x < a ? a : x > b ? b : x;
+}
+
+template <typename TYPE>
 TYPE normal_pdf(TYPE x, TYPE m, TYPE s)
 {
 	return exp(-pow((x - m) / s, TYPE(2)) / TYPE(2)) / (Const<TYPE>::SqrtTwoPi() * s);
