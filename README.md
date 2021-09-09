@@ -187,6 +187,10 @@ Implemented [Simple linear regression](https://en.wikipedia.org/wiki/Simple_line
 
 The [Theil-Sen estimator](https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator) is a [robust](https://en.wikipedia.org/wiki/Robust_statistics) [line fitting](https://en.wikipedia.org/wiki/Line_fitting) algorithm.
 
+### [repeated_median.hh](repeated_median.hh)
+
+The [repeated median estimator](https://en.wikipedia.org/wiki/Repeated_median_regression) is a [robust](https://en.wikipedia.org/wiki/Robust_statistics) [line fitting](https://en.wikipedia.org/wiki/Line_fitting) algorithm.
+
 ### [complex.hh](complex.hh)
 
 Faster alternative (no Inf/NaN handling) to the std::complex implementation.
