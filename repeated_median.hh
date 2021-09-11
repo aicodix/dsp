@@ -17,7 +17,7 @@ class RepeatedMedianEstimator
 	TYPE xint_, yint_, slope_;
 public:
 	RepeatedMedianEstimator() : xint_(0), yint_(0), slope_(0) {}
-	void compute(TYPE *x, TYPE *y, int LEN)
+	void compute(const TYPE *x, const TYPE *y, int LEN)
 	{
 		if (LEN > SIZE)
 			LEN = SIZE;
@@ -68,7 +68,7 @@ class RepeatedMedianEstimator2
 	TYPE xint_, yint_, slope_;
 public:
 	RepeatedMedianEstimator2() : xint_(0), yint_(0), slope_(0) {}
-	void compute(TYPE *x, TYPE *y, int LEN)
+	void compute(const TYPE *x, const TYPE *y, int LEN)
 	{
 		if (LEN > SIZE)
 			LEN = SIZE;

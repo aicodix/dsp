@@ -18,7 +18,7 @@ class TheilSenEstimator
 	TYPE xint_, yint_, slope_;
 public:
 	TheilSenEstimator() : xint_(0), yint_(0), slope_(0) {}
-	void compute(TYPE *x, TYPE *y, int LEN)
+	void compute(const TYPE *x, const TYPE *y, int LEN)
 	{
 		int count = 0;
 		for (int i = 0; count < size_ && i < LEN; ++i)

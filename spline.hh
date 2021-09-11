@@ -15,7 +15,7 @@ class UniformNaturalCubicSpline
 	ITYPE x0, dx;
 public:
 	UniformNaturalCubicSpline() = default;
-	UniformNaturalCubicSpline(OTYPE *Y, ITYPE x0 = 0, ITYPE dx = 1, int STRIDE = 1) : x0(x0), dx(dx)
+	UniformNaturalCubicSpline(const OTYPE *Y, ITYPE x0 = 0, ITYPE dx = 1, int STRIDE = 1) : x0(x0), dx(dx)
 	{
 		ITYPE U[KNOTS-1];
 		U[0] = ITYPE(0);

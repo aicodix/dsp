@@ -14,7 +14,7 @@ class SimpleLinearRegression
 	TYPE xint_, yint_, slope_;
 public:
 	SimpleLinearRegression() : xint_(0), yint_(0), slope_(0) {}
-	SimpleLinearRegression(TYPE *x, TYPE *y, int LEN)
+	SimpleLinearRegression(const TYPE *x, const TYPE *y, int LEN)
 	{
 		TYPE avgX(0), avgY(0);
 		for (int i = 0; i < LEN; ++i) {
@@ -32,7 +32,7 @@ public:
 		slope_ = covXY / varX;
 		yint_ = avgY - slope_ * avgX;
 	}
-	SimpleLinearRegression(TYPE *y, int l, TYPE x0 = 0, TYPE dx = 1)
+	SimpleLinearRegression(const TYPE *y, int l, TYPE x0 = 0, TYPE dx = 1)
 	{
 		TYPE midL((l-1) / TYPE(2));
 		TYPE avgX(x0 + dx*midL);
