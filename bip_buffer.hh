@@ -19,6 +19,10 @@ public:
 		for (int i = 0; i < 2*NUM; ++i)
 			buf[i] = 0;
 	}
+	const TYPE *operator () ()
+	{
+		return buf + min(pos0, pos1);
+	}
 	const TYPE *operator () (TYPE input)
 	{
 		buf[pos0] = buf[pos1] = input;
@@ -26,7 +30,7 @@ public:
 			pos0 = 0;
 		if (++pos1 >= 2*NUM)
 			pos1 = 0;
-		return buf + min(pos0, pos1);
+		return operator () ();
 	}
 };
 
