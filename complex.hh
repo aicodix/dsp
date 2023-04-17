@@ -54,6 +54,18 @@ public:
 };
 
 template <typename T>
+static constexpr bool operator == (Complex<T> a, Complex<T> b)
+{
+	return a.real() == b.real() && a.imag() == b.imag();
+}
+
+template <typename T>
+static constexpr bool operator != (Complex<T> a, Complex<T> b)
+{
+	return a.real() != b.real() || a.imag() != b.imag();
+}
+
+template <typename T>
 static constexpr Complex<T> operator + (Complex<T> a, Complex<T> b)
 {
 	return Complex<T>(a.real() + b.real(), a.imag() + b.imag());
@@ -93,6 +105,13 @@ template <typename T>
 static constexpr Complex<T> operator * (Complex<T> a, Complex<T> b)
 {
 	return Complex<T>(a.real() * b.real() - a.imag() * b.imag(), a.real() * b.imag() + a.imag() * b.real());
+}
+
+template <typename T>
+static constexpr Complex<T> operator / (T a, Complex<T> b)
+{
+	return Complex<T>((a * b.real()) / (b.real() * b.real() + b.imag() * b.imag()),
+			- (a * b.imag()) / (b.real() * b.real() + b.imag() * b.imag()));
 }
 
 template <typename T>
