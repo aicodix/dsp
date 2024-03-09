@@ -33,14 +33,16 @@ static int partition(TYPE *a, int l, int h)
 template <typename TYPE>
 static TYPE select(TYPE *a, int l, int h, int k)
 {
-	if (l == h)
-		return a[l];
-	int i = partition(a, l, h);
-	if (i == k)
-		return a[i];
-	if (i > k)
-		return select(a, l, i-1, k);
-	return select(a, i+1, h, k);
+	while (l < h) {
+		int i = partition(a, l, h);
+		if (k == i)
+			return a[k];
+		if (k < i)
+			h = i - 1;
+		else
+			l = i + 1;
+	}
+	return a[l];
 }
 
 }
