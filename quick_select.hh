@@ -21,6 +21,8 @@ static inline void swap(TYPE *a, int i, int j)
 template <typename TYPE>
 static int partition(TYPE *a, int l, int h)
 {
+	int p = (l + h) / 2;
+	swap(a, p, h);
 	for (int i = l; i < h; ++i)
 		if (a[i] < a[h])
 			swap(a, i, l++);
