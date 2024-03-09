@@ -19,10 +19,20 @@ static inline void swap(TYPE *a, int i, int j)
 }
 
 template <typename TYPE>
+static inline void sort(TYPE *a, int i, int j, int k)
+{
+	if (a[i] > a[j])
+		swap(a, i, j);
+	if (a[i] > a[k])
+		swap(a, i, k);
+	if (a[j] > a[k])
+		swap(a, j, k);
+}
+
+template <typename TYPE>
 static int partition(TYPE *a, int l, int h)
 {
-	int p = (l + h) / 2;
-	swap(a, p, h);
+	sort(a, (l + h) / 2, h, l);
 	for (int i = l; i < h; ++i)
 		if (a[i] < a[h])
 			swap(a, i, l++);
