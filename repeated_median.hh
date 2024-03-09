@@ -6,7 +6,7 @@ Copyright 2021 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
-#include <algorithm>
+#include "quick_select.hh"
 
 namespace DSP {
 
@@ -26,21 +26,17 @@ public:
 			for (int j = 0; j < LEN; ++j)
 				if (x[j] != x[i])
 					inner_[count++] = (y[j] - y[i]) / (x[j] - x[i]);
-			std::nth_element(inner_, inner_+count/2, inner_+count);
-			outer_[i] = inner_[count/2];
+			outer_[i] = quick_select(inner_, count/2, count);
 		}
-		std::nth_element(outer_, outer_+LEN/2, outer_+LEN);
-		slope_ = outer_[LEN/2];
+		slope_ = quick_select(outer_, LEN/2, LEN);
 		for (int i = 0; i < LEN; ++i) {
 			int count = 0;
 			for (int j = 0; j < LEN; ++j)
 				if (x[j] != x[i])
 					inner_[count++] = (x[j]*y[i] - x[i]*y[j]) / (x[j] - x[i]);
-			std::nth_element(inner_, inner_+count/2, inner_+count);
-			outer_[i] = inner_[count/2];
+			outer_[i] = quick_select(inner_, count/2, count);
 		}
-		std::nth_element(outer_, outer_+LEN/2, outer_+LEN);
-		yint_ = outer_[LEN/2];
+		yint_ = quick_select(outer_, LEN/2, LEN);
 		xint_ = - yint_ / slope_;
 	}
 	TYPE xint()
@@ -77,15 +73,12 @@ public:
 			for (int j = 0; j < LEN; ++j)
 				if (x[j] != x[i])
 					inner_[count++] = (y[j] - y[i]) / (x[j] - x[i]);
-			std::nth_element(inner_, inner_+count/2, inner_+count);
-			outer_[i] = inner_[count/2];
+			outer_[i] = quick_select(inner_, count/2, count);
 		}
-		std::nth_element(outer_, outer_+LEN/2, outer_+LEN);
-		slope_ = outer_[LEN/2];
+		slope_ = quick_select(outer_, LEN/2, LEN);
 		for (int i = 0; i < LEN; ++i)
 			outer_[i] = y[i] - slope_ * x[i];
-		std::nth_element(outer_, outer_+LEN/2, outer_+LEN);
-		yint_ = outer_[LEN/2];
+		yint_ = quick_select(outer_, LEN/2, LEN);
 		xint_ = - yint_ / slope_;
 	}
 	TYPE xint()
