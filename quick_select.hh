@@ -46,6 +46,7 @@ static TYPE select(TYPE *a, int l, int h, int k)
 template <typename TYPE>
 TYPE quick_select(TYPE *a, int k, int n)
 {
+	assert(n && k < n);
 	return QUICK::select(a, 0, n-1, k);
 }
 
