@@ -45,7 +45,7 @@ static void partition(TYPE *a, int &l, int &h)
 }
 
 template <typename TYPE>
-static TYPE select(TYPE *a, int l, int h, int k)
+static void select(TYPE *a, int l, int h, int k)
 {
 	while (l < h) {
 		int lt = l, gt = h;
@@ -55,9 +55,8 @@ static TYPE select(TYPE *a, int l, int h, int k)
 		else if (k > gt)
 			l = gt + 1;
 		else
-			return a[k];
+			break;
 	}
-	return a[l];
 }
 
 }
@@ -66,7 +65,8 @@ template <typename TYPE>
 TYPE quick_select(TYPE *a, int k, int n)
 {
 	assert(n && k < n);
-	return QUICK::select(a, 0, n-1, k);
+	QUICK::select(a, 0, n-1, k);
+	return a[k];
 }
 
 }
