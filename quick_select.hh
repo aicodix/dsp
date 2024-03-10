@@ -30,27 +30,32 @@ static inline void sort(TYPE *a, int i, int j, int k)
 }
 
 template <typename TYPE>
-static int partition(TYPE *a, int l, int h)
+static void partition(TYPE *a, int &l, int &h)
 {
-	sort(a, (l + h) / 2, h, l);
-	for (int i = l; i < h; ++i)
-		if (a[i] < a[h])
-			swap(a, i, l++);
-	swap(a, l, h);
-	return l;
+	int m = l + (h - l) / 2;
+	sort(a, l, m, h);
+	TYPE pivot = a[m];
+	for (int i = l; i <= h;)
+		if (a[i] < pivot)
+			swap(a, i++, l++);
+		else if (a[i] > pivot)
+			swap(a, i, h--);
+		else
+			++i;
 }
 
 template <typename TYPE>
 static TYPE select(TYPE *a, int l, int h, int k)
 {
 	while (l < h) {
-		int i = partition(a, l, h);
-		if (k == i)
-			return a[k];
-		if (k < i)
-			h = i - 1;
+		int lt = l, gt = h;
+		partition(a, lt, gt);
+		if (k < lt)
+			h = lt - 1;
+		else if (k > gt)
+			l = gt + 1;
 		else
-			l = i + 1;
+			return a[k];
 	}
 	return a[l];
 }
