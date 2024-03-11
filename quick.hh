@@ -58,11 +58,11 @@ static void partition(TYPE *a, int &l, int &h)
 }
 
 template <typename TYPE>
-static void insertion(TYPE *a, int n)
+static void insertion(TYPE *a, int l, int h)
 {
-	for (int i = 1, j; i < n; ++i) {
+	for (int i = l + 1, j; i <= h; ++i) {
 		TYPE t = a[i];
-		for (j = i; j > 0 && t < a[j-1]; --j)
+		for (j = i; j > l && t < a[j-1]; --j)
 			a[j] = a[j-1];
 		a[j] = t;
 	}
@@ -72,9 +72,8 @@ template <typename TYPE>
 static void sort(TYPE *a, int l, int h)
 {
 	if (l < h) {
-		int n = h - l + 1;
-		if (n <= 32) {
-			insertion(a+l, n);
+		if (h - l < 32) {
+			insertion(a, l, h);
 		} else {
 			int lt = l, gt = h;
 			partition(a, lt, gt);
@@ -88,9 +87,8 @@ template <typename TYPE>
 static void select(TYPE *a, int l, int h, int k)
 {
 	while (l < h) {
-		int n = h - l + 1;
-		if (n <= 32) {
-			insertion(a+l, n);
+		if (h - l < 32) {
+			insertion(a, l, h);
 			break;
 		} else {
 			int lt = l, gt = h;
