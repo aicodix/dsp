@@ -19,22 +19,35 @@ static inline void swap(TYPE *a, int i, int j)
 }
 
 template <typename TYPE>
-static inline void sort(TYPE *a, int i, int j, int k)
+static inline void median(TYPE *A, int a, int b, int c, int d, int e)
 {
-	if (a[i] > a[j])
-		swap(a, i, j);
-	if (a[i] > a[k])
-		swap(a, i, k);
-	if (a[j] > a[k])
-		swap(a, j, k);
+	if (A[c] < A[a])
+		swap(A, a, c);
+	if (A[d] < A[b])
+		swap(A, b, d);
+	if (A[d] < A[c]) {
+		swap(A, c, d);
+		swap(A, a, b);
+	}
+	if (A[e] < A[b])
+		swap(A, b, e);
+	if (A[e] < A[c]) {
+		swap(A, c, e);
+		if (A[c] < A[a])
+			swap(A, a, c);
+	} else if (A[c] < A[b]) {
+		swap(A, b, c);
+	}
 }
 
 template <typename TYPE>
 static void partition(TYPE *a, int &l, int &h)
 {
-	int m = l + (h - l) / 2;
-	sort(a, l, m, h);
-	TYPE pivot = a[m];
+	int half = (h - l) / 2;
+	int quarter = (h - l) / 4;
+	int middle = l + half;
+	median(a, l, l + quarter, middle, middle + quarter, h);
+	TYPE pivot = a[middle];
 	for (int i = l; i <= h;)
 		if (a[i] < pivot)
 			swap(a, i++, l++);
