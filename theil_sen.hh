@@ -6,7 +6,7 @@ Copyright 2021 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
-#include "quick_select.hh"
+#include "quick.hh"
 
 namespace DSP {
 

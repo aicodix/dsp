@@ -1,5 +1,5 @@
 /*
-Quick select algorithm
+Quick algorithms for sorting and selecting
 
 Copyright 2024 Ahmet Inan <inan@aicodix.de>
 */
@@ -58,6 +58,17 @@ static void partition(TYPE *a, int &l, int &h)
 }
 
 template <typename TYPE>
+static void sort(TYPE *a, int l, int h)
+{
+	if (l < h) {
+		int lt = l, gt = h;
+		partition(a, lt, gt);
+		sort(a, l, lt - 1);
+		sort(a, gt + 1, h);
+	}
+}
+
+template <typename TYPE>
 static void select(TYPE *a, int l, int h, int k)
 {
 	while (l < h) {
@@ -72,6 +83,12 @@ static void select(TYPE *a, int l, int h, int k)
 	}
 }
 
+}
+
+template <typename TYPE>
+void quick_sort(TYPE *a, int n)
+{
+	QUICK::sort(a, 0, n-1);
 }
 
 template <typename TYPE>
