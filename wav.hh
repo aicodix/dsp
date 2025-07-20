@@ -170,26 +170,20 @@ public:
 				min = -8388608;
 				max = 8388607;
 				break;
-			case 32:
-				offset = 0;
-				factor = 2147483647;
-				min = -2147483648;
-				max = 2147483647;
-				break;
 			default:
-				bits = 16;
-				bytes = 2;
+				bits = 32;
+				bytes = 4;
 				offset = 0;
-				factor = 32767;
-				min = -32768;
-				max = 32767;
+				factor = 1;
+				min = -1;
+				max = 1;
 		}
 		os.write("RIFF", 4); // ChunkID
 		writeLE(36, 4); // ChunkSize
 		os.write("WAVE", 4); // Format
 		os.write("fmt ", 4); // Subchunk1ID
 		writeLE(16, 4); // Subchunk1Size
-		writeLE(1, 2); // AudioFormat
+		writeLE(bits == 32 ? 3 : 1, 2); // AudioFormat
 		writeLE(channels_, 2); // NumChannels
 		writeLE(rate_, 4); // SampleRate
 		writeLE(rate_ * channels_ * bytes, 4); // ByteRate
@@ -212,8 +206,13 @@ public:
 			stride = channels_;
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
-				TYPE v = TYPE(offset) + TYPE(factor) * buf[stride * n + c];
-				writeLE(std::nearbyint(std::min(std::max(v, TYPE(min)), TYPE(max))), bytes);
+				if (bytes == 4) {
+					float v = buf[stride * n + c];
+					writeLE(*reinterpret_cast<int *>(&v), 4);
+				} else {
+					TYPE v = TYPE(offset) + TYPE(factor) * buf[stride * n + c];
+					writeLE(std::nearbyint(std::min(std::max(v, TYPE(min)), TYPE(max))), bytes);
+				}
 			}
 		}
 	}
