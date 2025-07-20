@@ -55,7 +55,7 @@ public:
 		if (Subchunk1Size != 16)
 			return;
 		int AudioFormat = readLE(2);
-		if (AudioFormat != 1)
+		if (AudioFormat != 1 && AudioFormat != 3)
 			return;
 		channels_ = readLE(2);
 		rate_ = readLE(4);
@@ -63,6 +63,10 @@ public:
 		int BlockAlign = readLE(2);
 		bits_ = readLE(2);
 		if (bits_ != 8 && bits_ != 16 && bits_ != 24 && bits_ != 32)
+			return;
+		if ((bits_ == 8 || bits_ == 16 || bits_ == 24) && AudioFormat != 1)
+			return;
+		if (bits_ == 32 && AudioFormat != 3)
 			return;
 		bytes = bits_ / 8;
 		if (bytes * channels_ != BlockAlign)
@@ -93,7 +97,7 @@ public:
 				break;
 			case 32:
 				offset = 0;
-				factor = 2147483647;
+				factor = 1;
 				break;
 			default:
 				return;
@@ -105,7 +109,12 @@ public:
 			stride = channels_;
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
-				buf[stride * n + c] = TYPE(readLE(bytes) - offset) / TYPE(factor);
+				if (bytes == 4) {
+					int v = readLE(4);
+					buf[stride * n + c] = *reinterpret_cast<float *>(&v);
+				} else {
+					buf[stride * n + c] = TYPE(readLE(bytes) - offset) / TYPE(factor);
+				}
 			}
 		}
 	}
