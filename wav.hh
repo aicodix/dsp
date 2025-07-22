@@ -92,7 +92,7 @@ public:
 			return;
 		int Subchunk2Size = readLE(4);
 		int overhead = bits_ == 32 ? 58 : 44;
-		if (Subchunk2Size + overhead > ChunkSize)
+		if (Subchunk2Size + overhead - 8 != ChunkSize)
 			return;
 		if (Subchunk1Size == 16)
 			frames_ = Subchunk2Size / (bytes * channels_);
