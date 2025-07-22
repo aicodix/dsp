@@ -52,7 +52,7 @@ public:
 		if (cmp4("fmt ", Subchunk1ID))
 			return;
 		int Subchunk1Size = readLE(4);
-		if (Subchunk1Size != 16)
+		if (Subchunk1Size != 16 && Subchunk1Size != 18)
 			return;
 		int AudioFormat = readLE(2);
 		if (AudioFormat != 1 && AudioFormat != 3)
@@ -73,6 +73,19 @@ public:
 			return;
 		if (rate_ * bytes * channels_ != ByteRate)
 			return;
+		if (Subchunk1Size == 18) {
+			int ExtSize = readLE(2);
+			if (ExtSize != 0)
+				return;
+			char SubchunkID[4];
+			is.read(SubchunkID, 4);
+			if (cmp4("fact", SubchunkID))
+				return;
+			int SubchunkSize = readLE(4);
+			if (SubchunkSize != 4)
+				return;
+			frames_ = readLE(4);
+		}
 		char Subchunk2ID[4];
 		is.read(Subchunk2ID, 4);
 		if (cmp4("data", Subchunk2ID))
@@ -80,8 +93,8 @@ public:
 		int Subchunk2Size = readLE(4);
 		if (36 + Subchunk2Size > ChunkSize)
 			return;
-		frames_ = Subchunk2Size / (bytes * channels_);
-
+		if (Subchunk1Size == 16)
+			frames_ = Subchunk2Size / (bytes * channels_);
 		switch (bits_) {
 			case 8:
 				offset = 128;
