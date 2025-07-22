@@ -91,7 +91,8 @@ public:
 		if (cmp4("data", Subchunk2ID))
 			return;
 		int Subchunk2Size = readLE(4);
-		if (36 + Subchunk2Size > ChunkSize)
+		int overhead = bits_ == 32 ? 50 : 36;
+		if (Subchunk2Size + overhead > ChunkSize)
 			return;
 		if (Subchunk1Size == 16)
 			frames_ = Subchunk2Size / (bytes * channels_);
@@ -201,25 +202,42 @@ public:
 				max = 1;
 		}
 		os.write("RIFF", 4); // ChunkID
-		writeLE(36, 4); // ChunkSize
+		writeLE(bits == 32 ? 50 : 36, 4); // ChunkSize
 		os.write("WAVE", 4); // Format
 		os.write("fmt ", 4); // Subchunk1ID
-		writeLE(16, 4); // Subchunk1Size
-		writeLE(bits == 32 ? 3 : 1, 2); // AudioFormat
+		if (bits == 32) {
+			writeLE(18, 4); // Subchunk1Size
+			writeLE(3, 2); // AudioFormat
+		} else {
+			writeLE(16, 4); // Subchunk1Size
+			writeLE(1, 2); // AudioFormat
+		}
 		writeLE(channels_, 2); // NumChannels
 		writeLE(rate_, 4); // SampleRate
 		writeLE(rate_ * channels_ * bytes, 4); // ByteRate
 		writeLE(channels_ * bytes, 2); // BlockAlign
 		writeLE(8 * bytes, 2); // BitsPerSample
+		if (bits == 32) {
+			writeLE(0, 2); // ExtSize
+			os.write("fact", 4); // SubchunkID
+			writeLE(4, 4); // SubchunkSize
+			writeLE(0, 4); // FrameCount
+		}
 		os.write("data", 4); // Subchunk2ID
 		writeLE(0, 4); // Subchunk2Size
 	}
 	~WriteWAV()
 	{
-		int size = int(os.tellp()) - 44;
+		int overhead = bytes == 4 ? 50 : 36;
+		int size = int(os.tellp()) - overhead;
 		os.seekp(4);
-		writeLE(36 + size, 4); // ChunkSize
-		os.seekp(40);
+		writeLE(overhead + size, 4); // ChunkSize
+		if (bytes == 4) {
+			os.seekp(46);
+			int frames = size / (bytes * channels_);
+			writeLE(frames, 4); // FrameCount
+		}
+		os.seekp(overhead + 4);
 		writeLE(size, 4); // Subchunk2Size
 	}
 	void write(const TYPE *buf, int num, int stride = -1)
