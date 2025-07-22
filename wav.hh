@@ -226,7 +226,7 @@ public:
 			writeLE(0, 4); // FrameCount
 		}
 		os.write("data", 4); // Subchunk2ID
-		writeLE(0, 4); // Subchunk2Size
+		writeLE(-1, 4); // Subchunk2Size
 	}
 	~WriteWAV()
 	{
