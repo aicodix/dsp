@@ -91,13 +91,15 @@ public:
 		if (cmp4("data", Subchunk2ID))
 			return;
 		int Subchunk2Size = readLE(4);
-		if (Subchunk2Size < 0)
-			Subchunk2Size = 0;
 		int overhead = bits_ == 32 ? 58 : 44;
-		if (Subchunk2Size + overhead - 8 != ChunkSize)
-			return;
-		if (Subchunk1Size == 16)
-			frames_ = Subchunk2Size / (bytes * channels_);
+		if (Subchunk2Size <= 0 || ChunkSize <= 0) {
+			frames_ = -1;
+		} else {
+			if (Subchunk2Size + overhead - 8 != ChunkSize)
+				return;
+			if (Subchunk1Size == 16)
+				frames_ = Subchunk2Size / (bytes * channels_);
+		}
 		switch (bits_) {
 			case 8:
 				offset = 128;
