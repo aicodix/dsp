@@ -62,9 +62,9 @@ public:
 		int ByteRate = readLE(4);
 		int BlockAlign = readLE(2);
 		bits_ = readLE(2);
-		if (bits_ != 8 && bits_ != 16 && bits_ != 24 && bits_ != 32)
+		if (bits_ != 8 && bits_ != 16 && bits_ != 32)
 			return;
-		if ((bits_ == 8 || bits_ == 16 || bits_ == 24) && AudioFormat != 1)
+		if ((bits_ == 8 || bits_ == 16) && AudioFormat != 1)
 			return;
 		if (bits_ == 32 && AudioFormat != 3)
 			return;
@@ -108,10 +108,6 @@ public:
 			case 16:
 				offset = 0;
 				factor = 32767;
-				break;
-			case 24:
-				offset = 0;
-				factor = 8388607;
 				break;
 			case 32:
 				offset = 0;
@@ -190,12 +186,6 @@ public:
 				factor = 32767;
 				min = -32768;
 				max = 32767;
-				break;
-			case 24:
-				offset = 0;
-				factor = 8388607;
-				min = -8388608;
-				max = 8388607;
 				break;
 			default:
 				bits = 32;
