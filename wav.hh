@@ -91,7 +91,7 @@ public:
 		if (cmp4("data", Subchunk2ID))
 			return;
 		int Subchunk2Size = readLE(4);
-		int overhead = bits_ == 32 ? 50 : 36;
+		int overhead = bits_ == 32 ? 58 : 44;
 		if (Subchunk2Size + overhead > ChunkSize)
 			return;
 		if (Subchunk1Size == 16)
@@ -228,16 +228,17 @@ public:
 	}
 	~WriteWAV()
 	{
-		int overhead = bytes == 4 ? 50 : 36;
-		int size = int(os.tellp()) - overhead;
+		int overhead = bytes == 4 ? 58 : 44;
+		int position = int(os.tellp());
+		int size = position - overhead;
 		os.seekp(4);
-		writeLE(overhead + size, 4); // ChunkSize
+		writeLE(position - 8, 4); // ChunkSize
 		if (bytes == 4) {
 			os.seekp(46);
 			int frames = size / (bytes * channels_);
 			writeLE(frames, 4); // FrameCount
 		}
-		os.seekp(overhead + 4);
+		os.seekp(overhead - 4);
 		writeLE(size, 4); // Subchunk2Size
 	}
 	void write(const TYPE *buf, int num, int stride = -1)
