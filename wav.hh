@@ -35,6 +35,15 @@ class ReadWAV : public ReadPCM<TYPE>
 				return true;
 		return false;
 	}
+	static float int2float(int value)
+	{
+		union {
+			int i;
+			float f;
+		} u;
+		u.i = value;
+		return u.f;
+	}
 public:
 	ReadWAV(const char *name) : is(name, std::ios::binary)
 	{
@@ -123,12 +132,10 @@ public:
 			stride = channels_;
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
-				if (bytes == 4) {
-					int v = readLE(4);
-					buf[stride * n + c] = *reinterpret_cast<float *>(&v);
-				} else {
+				if (bytes == 4)
+					buf[stride * n + c] = int2float(readLE(4));
+				else
 					buf[stride * n + c] = TYPE(readLE(bytes) - offset) / TYPE(factor);
-				}
 			}
 		}
 	}
@@ -168,6 +175,15 @@ class WriteWAV : public WritePCM<TYPE>
 	{
 		for (int i = 0; i < b; ++i)
 			os.put(255 & (v >> (8 * i)));
+	}
+	static int float2int(float value)
+	{
+		union {
+			float f;
+			int i;
+		} u;
+		u.f = value;
+		return u.i;
 	}
 public:
 	WriteWAV(const char *name, int rate, int bits, int channels) :
@@ -242,8 +258,7 @@ public:
 		for (int n = 0; n < num; ++n) {
 			for (int c = 0; c < channels_; ++c) {
 				if (bytes == 4) {
-					float v = buf[stride * n + c];
-					writeLE(*reinterpret_cast<int *>(&v), 4);
+					writeLE(float2int(buf[stride * n + c]), 4);
 				} else {
 					TYPE v = TYPE(offset) + TYPE(factor) * buf[stride * n + c];
 					writeLE(std::nearbyint(std::min(std::max(v, TYPE(min)), TYPE(max))), bytes);
