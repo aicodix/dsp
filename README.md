@@ -29,6 +29,19 @@ Implemented are the following [finite impulse response](https://en.wikipedia.org
 * [band-pass filter](https://en.wikipedia.org/wiki/Band-pass_filter)
 * [Hilbert-transform filter](https://en.wikipedia.org/wiki/Hilbert_transform)
 
+### [fir.hh](fir.hh)
+
+[Finite impulse response](https://en.wikipedia.org/wiki/Finite_impulse_response) filter computing the [convolution](https://en.wikipedia.org/wiki/Convolution) of the input with its taps, which come from a kernel and a [window function](https://en.wikipedia.org/wiki/Window_function) or from an array.
+
+Example:
+```
+DSP::LowPass<VALUE> kernel(cutoff);
+DSP::Kaiser<VALUE> window(2);
+DSP::FIR<TYPE, VALUE, TAPS> lowpass(kernel, window);
+*snip*
+TYPE output = lowpass(input);
+```
+
 ### [ema.hh](ema.hh)
 
 The [exponential moving average](https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average) is an [infinite impulse response](https://en.wikipedia.org/wiki/Infinite_impulse_response) [low-pass filter](https://en.wikipedia.org/wiki/Low-pass_filter).
