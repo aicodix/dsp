@@ -30,6 +30,8 @@ class ReadWAV : public ReadPCM<TYPE>
 	}
 	bool cmp4(const char *a, const char *b)
 	{
+		if (!is.good())
+			return true;
 		for (int i = 0; i < 4; ++i)
 			if (a[i] != b[i])
 				return true;
@@ -45,7 +47,8 @@ class ReadWAV : public ReadPCM<TYPE>
 		return u.f;
 	}
 public:
-	ReadWAV(const char *name) : is(name, std::ios::binary)
+	ReadWAV(const char *name) : is(name, std::ios::binary),
+		bits_(0), bytes(0), rate_(0), channels_(0), frames_(-1), offset(0), factor(1)
 	{
 		char ChunkID[4];
 		is.read(ChunkID, 4);
