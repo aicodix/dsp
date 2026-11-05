@@ -6,6 +6,7 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 
 #pragma once
 
+#include <functional>
 #include "kahan.hh"
 #include "delay.hh"
 #include "swa.hh"
