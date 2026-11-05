@@ -93,6 +93,10 @@ Fs/4 [Complex down conversion](https://en.wikipedia.org/wiki/Digital_down_conver
 
 [Exponentiation](https://en.wikipedia.org/wiki/Exponentiation) approximations.
 
+### [sincos.hh](sincos.hh)
+
+[Sine and cosine](https://en.wikipedia.org/wiki/Sine_and_cosine) approximations for any argument, with the [argument reduced](https://en.wikipedia.org/wiki/Trigonometric_functions#Argument_reduction) to a quarter of the [unit circle](https://en.wikipedia.org/wiki/Unit_circle).
+
 ### [cordic.hh](cordic.hh)
 
 When working on a device where multiplication is expensive, the [CORDIC](https://en.wikipedia.org/wiki/CORDIC) comes in handy for computing [trigonometric functions](https://en.wikipedia.org/wiki/Trigonometric_functions).
