@@ -7,7 +7,6 @@ Copyright 2020 Ahmet Inan <inan@aicodix.de>
 #pragma once
 
 #include "delay.hh"
-#include "stack.hh"
 
 namespace DSP {
 
@@ -15,31 +14,35 @@ template <typename TYPE, typename EQUAL, typename COMP, int NUM>
 class MovExt
 {
 	Delay<TYPE, NUM> window;
-	Stack<TYPE, NUM> dispenser, refill;
+	// the dispenser and refill stacks share one array, as they never hold more than NUM values together:
+	// the dispenser grows up from the bottom and the refill down from the top
+	TYPE stack[NUM];
+	int disp, fill;
 	EQUAL equal;
 	COMP comp;
 public:
-	MovExt(TYPE init) : window(init)
+	MovExt(TYPE init) : window(init), disp(1), fill(NUM)
 	{
-		dispenser.push(init);
+		stack[0] = init;
 	}
 	TYPE operator () (TYPE input)
 	{
-		if (equal(window(input), dispenser.top()))
-			dispenser.pop();
+		if (equal(window(input), stack[disp-1]))
+			--disp;
 
-		while (!refill.empty() && comp(input, refill.top()))
-			refill.pop();
-		refill.push(input);
+		while (fill < NUM && comp(input, stack[fill]))
+			++fill;
+		assert(disp < fill);
+		stack[--fill] = input;
 
-		if (dispenser.empty()) {
-			while (!refill.empty()) {
-				dispenser.push(refill.top());
-				refill.pop();
-			}
-			return dispenser.top();
+		// the oldest refill value becomes the top of the dispenser
+		if (!disp) {
+			TYPE top = stack[NUM-1];
+			while (fill < NUM)
+				stack[disp++] = stack[fill++];
+			return top;
 		}
-		return comp(dispenser.top(), refill.first()) ? dispenser.top() : refill.first();
+		return comp(stack[disp-1], stack[NUM-1]) ? stack[disp-1] : stack[NUM-1];
 	}
 };
 
