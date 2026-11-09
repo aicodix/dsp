@@ -25,7 +25,7 @@ public:
 	}
 	TYPE operator () (TYPE input)
 	{
-		if (window(input) == dispenser.top())
+		if (equal(window(input), dispenser.top()))
 			dispenser.pop();
 
 		while (!refill.empty() && comp(input, refill.top()))
