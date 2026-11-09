@@ -131,6 +131,7 @@ The sliding window accelerator uses a tree and only updates nodes that depend on
 
 * Moving Minimum
 * Moving Maximum
+* Moving Minimum and Maximum together, from one window
 
 ### [bip_buffer.hh](bip_buffer.hh)
 

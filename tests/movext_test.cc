@@ -54,6 +54,42 @@ void test_float()
 	}
 }
 
+// both at once, against the extrema of the window, with the extreme values and zero,
+// which the window starts with, as inputs, from the start and for long
+template <int SIZE>
+void test_both()
+{
+	std::random_device ran;
+	std::default_random_engine gen(ran());
+	const float vals[] = { std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max(), std::numeric_limits<float>::min(), -2, -1, 0, 1, 2 };
+	std::uniform_int_distribution<int> pick(0, 7);
+	for (int run = 0; run < 10000; ++run) {
+		struct Min { float operator () (float a, float b) { return std::min(a, b); } };
+		DSP::SWA<float, Min, SIZE> ref_min(std::numeric_limits<float>::max());
+		struct Max { float operator () (float a, float b) { return std::max(a, b); } };
+		DSP::SWA<float, Max, SIZE> ref_max(std::numeric_limits<float>::lowest());
+		DSP::MovMinMax<float, SIZE> dut;
+		for (int loop = 0; loop < 3 * SIZE; ++loop) {
+			float val = vals[pick(gen)];
+			dut(val);
+			assert(ref_min(val) == dut.minimum());
+			assert(ref_max(val) == dut.maximum());
+		}
+	}
+	struct Min { int operator () (int a, int b) { return std::min(a, b); } };
+	DSP::SWA<int, Min, SIZE> ref_min(std::numeric_limits<int>::max());
+	struct Max { int operator () (int a, int b) { return std::max(a, b); } };
+	DSP::SWA<int, Max, SIZE> ref_max(std::numeric_limits<int>::min());
+	DSP::MovMinMax<int, SIZE> dut;
+	std::uniform_int_distribution<int> dis(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
+	for (int loop = 0; loop < 1000000; ++loop) {
+		int val = dis(gen);
+		dut(val);
+		assert(ref_min(val) == dut.minimum());
+		assert(ref_max(val) == dut.maximum());
+	}
+}
+
 int main()
 {
 	test<1>();
@@ -80,6 +116,13 @@ int main()
 	test_float<4>();
 	test_float<16>();
 	test_float<42>();
+	test_both<1>();
+	test_both<2>();
+	test_both<3>();
+	test_both<4>();
+	test_both<16>();
+	test_both<42>();
+	test_both<123>();
 
 	std::cerr << "Moving extrema test passed!" << std::endl;
 	return 0;
