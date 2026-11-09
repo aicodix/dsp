@@ -30,6 +30,30 @@ void test()
 	}
 }
 
+// short runs from the start, with the smallest positive float as an input,
+// and negative values otherwise, as with decibels, few of them for many ties
+template <int SIZE>
+void test_float()
+{
+	std::random_device ran;
+	std::default_random_engine gen(ran());
+	std::uniform_int_distribution<int> dis(-3, 0);
+	for (int run = 0; run < 10000; ++run) {
+		struct Min { float operator () (float a, float b) { return std::min(a, b); } };
+		DSP::SWA<float, Min, SIZE> ref_min(std::numeric_limits<float>::max());
+		DSP::MovMin<float, SIZE> dut_min;
+		struct Max { float operator () (float a, float b) { return std::max(a, b); } };
+		DSP::SWA<float, Max, SIZE> ref_max(std::numeric_limits<float>::lowest());
+		DSP::MovMax<float, SIZE> dut_max;
+		for (int loop = 0; loop < 3 * SIZE; ++loop) {
+			int num = dis(gen);
+			float val = num ? float(num) : std::numeric_limits<float>::min();
+			assert(ref_min(val) == dut_min(val));
+			assert(ref_max(val) == dut_max(val));
+		}
+	}
+}
+
 int main()
 {
 	test<1>();
@@ -50,6 +74,12 @@ int main()
 	test<42>();
 	test<123>();
 	test<4567>();
+	test_float<1>();
+	test_float<2>();
+	test_float<3>();
+	test_float<4>();
+	test_float<16>();
+	test_float<42>();
 
 	std::cerr << "Moving extrema test passed!" << std::endl;
 	return 0;

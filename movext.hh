@@ -62,7 +62,7 @@ class MovMax
 {
 	MovExt<TYPE, std::equal_to<TYPE>, std::greater<TYPE>, NUM> movmax;
 public:
-	MovMax() : movmax(std::numeric_limits<TYPE>::min())
+	MovMax() : movmax(std::numeric_limits<TYPE>::lowest())
 	{
 	}
 	TYPE operator () (TYPE input)
