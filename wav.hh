@@ -17,15 +17,16 @@ class ReadWAV : public ReadPCM<TYPE>
 	std::ifstream is;
 	int bits_, bytes, rate_, channels_, frames_;
 	int offset, factor;
+	// get() gives -1 past the end, which good() then reports, so keep its byte and shift it unsigned
 	int readLE(int b)
 	{
-		int v = 0;
+		unsigned v = 0;
 		for (int i = 0; i < b; ++i)
-			v |= is.get() << (8 * i);
+			v |= unsigned(is.get() & 255) << (8 * i);
 		if (b == 2 && v > 32767)
-			v |= ~32767;
+			v |= ~32767u;
 		if (b == 3 && v > 8388607)
-			v |= ~8388607;
+			v |= ~8388607u;
 		return v;
 	}
 	bool cmp4(const char *a, const char *b)

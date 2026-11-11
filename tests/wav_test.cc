@@ -8,6 +8,9 @@ Copyright 2026 Ahmet Inan <inan@aicodix.de>
 #include <cstdio>
 #include <cmath>
 #include <iostream>
+#include <fstream>
+#include <iterator>
+#include <string>
 #include "wav.hh"
 
 void round_trip(int bits, int channels)
@@ -45,11 +48,39 @@ void invalid(const char *name)
 	assert(wav.frames() == -1);
 }
 
+// a file that ends within the samples, so the reader reads past its end
+void truncated(int bits)
+{
+	const char *name = "wav_test.wav";
+	const int frames = 100;
+	float out[frames];
+	for (int i = 0; i < frames; ++i)
+		out[i] = -0.5f;
+	{
+		DSP::WriteWAV<float> wav(name, 8000, bits, 1);
+		wav.write(out, frames);
+	}
+	{
+		std::ifstream is(name, std::ios::binary);
+		std::string data((std::istreambuf_iterator<char>(is)), std::istreambuf_iterator<char>());
+		std::ofstream os(name, std::ios::binary | std::ios::trunc);
+		os.write(data.data(), data.size() - (frames / 2) * (bits / 8) - 1);
+	}
+	DSP::ReadWAV<float> wav(name);
+	assert(wav.good());
+	float inp[frames];
+	wav.read(inp, frames);
+	assert(!wav.good());
+	std::remove(name);
+}
+
 int main()
 {
 	for (int bits = 8; bits <= 32; bits *= 2)
 		for (int channels = 1; channels <= 2; ++channels)
 			round_trip(bits, channels);
+	for (int bits = 8; bits <= 32; bits *= 2)
+		truncated(bits);
 	invalid("wav_test.cc");
 	invalid("/dev/null");
 	invalid("does_not_exist.wav");
