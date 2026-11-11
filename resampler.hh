@@ -16,20 +16,23 @@ namespace DSP {
 template <typename TYPE, int TAPS, int OVER>
 class Resampler
 {
-	typedef DSP::UniformNaturalCubicSpline<TAPS * OVER, TYPE, TYPE> spline_type;
+	// the kernel is evaluated from -0.5 to TAPS - 0.5, centered at (TAPS - 1) / 2, so its
+	// table goes from -1 to TAPS, which keeps knots at whole samples and the window centered
+	static const int KNOTS = (TAPS + 1) * OVER + 1;
+	typedef DSP::UniformNaturalCubicSpline<KNOTS, TYPE, TYPE> spline_type;
 	spline_type lpf;
 	TYPE rate;
 public:
 	Resampler(TYPE rate, TYPE cutoff, TYPE alpha) : rate(rate)
 	{
-		TYPE tmp[TAPS * OVER];
+		TYPE tmp[KNOTS];
 		DSP::Kaiser<TYPE> window(alpha);
-		for (int n = 0; n < TAPS * OVER; ++n) {
-			TYPE x = TYPE(n) / TYPE(OVER) - TYPE(TAPS - 1) / TYPE(2);
+		for (int n = 0; n < KNOTS; ++n) {
+			TYPE x = TYPE(n) / TYPE(OVER) - TYPE(TAPS + 1) / TYPE(2);
 			TYPE y = TYPE(2) * cutoff / rate * sinc(TYPE(2) * cutoff / rate * x);
-			tmp[n] = y * window(n, TAPS * OVER);
+			tmp[n] = y * window(n, KNOTS);
 		}
-		lpf = spline_type(tmp, 0, 1.0 / OVER);
+		lpf = spline_type(tmp, TYPE(-1), TYPE(1) / TYPE(OVER));
 	}
 	template <typename IO>
 	void operator ()(IO *output, const IO *input, TYPE diff, int samples, int stride = 1)
@@ -54,7 +57,10 @@ public:
 template <typename TYPE, typename IO, int TAPS, int OVER>
 class Resampler2
 {
-	typedef DSP::UniformNaturalCubicSpline<TAPS * OVER, TYPE, TYPE> spline_type;
+	// the kernel is evaluated from -0.5 to TAPS - 0.5, centered at (TAPS - 1) / 2, so its
+	// table goes from -1 to TAPS, which keeps knots at whole samples and the window centered
+	static const int KNOTS = (TAPS + 1) * OVER + 1;
+	typedef DSP::UniformNaturalCubicSpline<KNOTS, TYPE, TYPE> spline_type;
 	spline_type lpf;
 	TYPE rate;
 	TYPE dpos;
@@ -62,14 +68,14 @@ class Resampler2
 public:
 	Resampler2(TYPE rate, TYPE cutoff, TYPE alpha) : rate(rate), dpos(0)
 	{
-		TYPE tmp[TAPS * OVER];
+		TYPE tmp[KNOTS];
 		DSP::Kaiser<TYPE> window(alpha);
-		for (int n = 0; n < TAPS * OVER; ++n) {
-			TYPE x = TYPE(n) / TYPE(OVER) - TYPE(TAPS - 1) / TYPE(2);
+		for (int n = 0; n < KNOTS; ++n) {
+			TYPE x = TYPE(n) / TYPE(OVER) - TYPE(TAPS + 1) / TYPE(2);
 			TYPE y = TYPE(2) * cutoff / rate * sinc(TYPE(2) * cutoff / rate * x);
-			tmp[n] = y * window(n, TAPS * OVER);
+			tmp[n] = y * window(n, KNOTS);
 		}
-		lpf = spline_type(tmp, 0, 1.0 / OVER);
+		lpf = spline_type(tmp, TYPE(-1), TYPE(1) / TYPE(OVER));
 		for (int i = 0; i < TAPS; ++i)
 			buf[i] = 0;
 	}
@@ -82,7 +88,8 @@ public:
 			dpos += TYPE(1);
 			return 0;
 		}
-		TYPE delta = diff / rate;
+		// the output rate is rate + diff, as with Resampler
+		TYPE delta = diff / (rate + diff);
 		int samples = 0;
 		again:
 		IO sum = 0;
