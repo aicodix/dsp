@@ -69,6 +69,22 @@ Normalizers for [periodic](https://en.wikipedia.org/wiki/Periodic_function) sign
 
 [Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) implemented using a [phasor](https://en.wikipedia.org/wiki/Phasor) and [complex multiplication](https://en.wikipedia.org/wiki/Complex_number#Multiplication) instead of a [lookup table](https://en.wikipedia.org/wiki/Lookup_table).
 
+### [down_conversion.hh](down_conversion.hh)
+
+[Down conversion](https://en.wikipedia.org/wiki/Digital_down_converter) of a real signal to complex baseband with optional [decimation](https://en.wikipedia.org/wiki/Downsampling_(signal_processing)).
+Mixing with an oscillator and then [low-pass filtering](https://en.wikipedia.org/wiki/Low-pass_filter) is the same as [band-pass filtering](https://en.wikipedia.org/wiki/Band-pass_filter) with the low-pass taps turned by the oscillator and then mixing.
+So the history stays real and only the outputs we keep are computed.
+
+Example:
+```
+DSP::LowPass<VALUE> kernel(cutoff);
+DSP::Kaiser<VALUE> window(2);
+DSP::DownConversion<TYPE, TAPS, DECIMATION> ddc(-1500, 48000, kernel, window);
+*snip*
+TYPE output = ddc(input);
+```
+With DECIMATION above one, input points to DECIMATION samples.
+
 ### [cdc.hh](cdc.hh)
 
 Fs/4 [Complex down conversion](https://en.wikipedia.org/wiki/Digital_down_converter)
