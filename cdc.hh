@@ -9,6 +9,7 @@ Copyright 2019 Ahmet Inan <inan@aicodix.de>
 #include "filter.hh"
 #include "window.hh"
 #include "bip_buffer.hh"
+#include "delay.hh"
 
 namespace DSP {
 
@@ -18,7 +19,7 @@ class CDC
 	static_assert((TAPS-1) % 4 == 0, "TAPS-1 not divisible by four");
 	typedef TYPE complex_type;
 	typedef typename TYPE::value_type value_type;
-	BipBuffer<value_type, (TAPS-1)/4> real;
+	Delay<value_type, (TAPS-1)/4> real;
 	BipBuffer<value_type, (TAPS-1)/2> imag;
 	value_type imco[(TAPS-1)/4];
 	value_type reco;
@@ -35,8 +36,7 @@ public:
 	complex_type operator()(value_type in0, value_type in1)
 	{
 		sign = !sign;
-		value_type re = reco * real()[0];
-		real(sign ? in1 : -in1);
+		value_type re = reco * real(sign ? in1 : -in1);
 		const value_type *buf = imag(sign ? in0 : -in0);
 		value_type im = imco[0] * (buf[(TAPS-1)/4-1] + buf[(TAPS-1)/4]);
 		for (int i = 1; i < (TAPS-1)/4; ++i)
