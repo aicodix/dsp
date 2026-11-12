@@ -7,6 +7,7 @@ Copyright 2020 Ahmet Inan <inan@aicodix.de>
 #pragma once
 
 #include "window.hh"
+#include "bip_buffer.hh"
 
 namespace DSP {
 
@@ -16,7 +17,7 @@ class Hilbert
 	static_assert((TAPS-1) % 4 == 0, "TAPS-1 not divisible by four");
 	typedef TYPE complex_type;
 	typedef typename TYPE::value_type value_type;
-	value_type real[TAPS];
+	BipBuffer<value_type, TAPS> real;
 	value_type imco[(TAPS-1)/4];
 	value_type reco;
 public:
@@ -26,18 +27,15 @@ public:
 		reco = win((TAPS-1)/2, TAPS);
 		for (int i = 0; i < (TAPS-1)/4; ++i)
 			imco[i] = win((2*i+1)+(TAPS-1)/2, TAPS) * 2 / ((2*i+1) * Const<value_type>::Pi());
-		for (int i = 0; i < TAPS; ++i)
-			real[i] = 0;
 	}
 	complex_type operator()(value_type input)
 	{
-		value_type re = reco * real[(TAPS-1)/2];
-		value_type im = imco[0] * (real[(TAPS-1)/2-1] - real[(TAPS-1)/2+1]);
+		const value_type *buf = real();
+		value_type re = reco * buf[(TAPS-1)/2];
+		value_type im = imco[0] * (buf[(TAPS-1)/2-1] - buf[(TAPS-1)/2+1]);
 		for (int i = 1; i < (TAPS-1)/4; ++i)
-			im += imco[i] * (real[(TAPS-1)/2-(2*i+1)] - real[(TAPS-1)/2+(2*i+1)]);
-		for (int i = 0; i < TAPS-1; ++i)
-			real[i] = real[i+1];
-		real[TAPS-1] = input;
+			im += imco[i] * (buf[(TAPS-1)/2-(2*i+1)] - buf[(TAPS-1)/2+(2*i+1)]);
+		real(input);
 		return complex_type(re, im);
 	}
 };
