@@ -112,7 +112,9 @@ public:
 	Kaiser(TYPE a) : a(a) {}
 	TYPE operator () (int n, int N) const
 	{
-		return i0(Const<TYPE>::Pi() * a * sqrt(TYPE(1) - sqr(TYPE(2 * n) / TYPE(N - 1) - TYPE(1)))) / i0(Const<TYPE>::Pi() * a);
+		// 1 - (2 n / (N - 1) - 1)^2 as 4 n (N - 1 - n) / (N - 1)^2, which can't go below zero by rounding,
+		// as the other can at the ends with -ffast-math, and is the same for n and N - 1 - n
+		return i0(Const<TYPE>::Pi() * a * sqrt(TYPE(4 * n) * TYPE(N - 1 - n) / sqr(TYPE(N - 1)))) / i0(Const<TYPE>::Pi() * a);
 	}
 };
 
